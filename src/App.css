@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
 }
 
 .App-logo {
@@ -35,4 +38,174 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.header {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+  padding: 10px; 
+  width: 100%; 
+}
+
+.logo {
+  width: 300px; 
+  height: auto;
+}
+
+.banner {
+  margin-top: 10px;
+  width: 300px; 
+  height: auto; 
+}
+
+.content {
+  width: 100%; 
+  padding: 20px; 
+  text-align: left; 
+}
+
+.info-section {
+  margin-bottom: 10px; 
+  text-align: left;
+  font-size: 0.8em;
+}
+
+.info-section h3 {
+  font-size: 1.5em; 
+  margin-bottom: 20px; 
+}
+
+.info-section li {
+  margin-bottom: 5px; 
+}
+
+.form-grid {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 10px; 
+}
+
+.form-grid div {
+  display: flex;
+  flex-direction: column; 
+}
+
+label {
+  font-size: 0.8em;
+  margin-bottom: 5px; 
+}
+
+.required {
+  color: red;
+  font-weight: bold;
+}
+
+select {
+  font-family: 'Arial', sans-serif; 
+  background-color: white;  
+  max-width: 400px; 
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px; 
+  box-sizing: border-box; 
+}
+
+input {
+  font-family: 'Arial', sans-serif; 
+  max-width: 400px;
+  width: 100%; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+}
+
+.header-container {
+  background-color: #f0f0f0; 
+  padding: 10px 20px; 
+  width: 100%; 
+  box-sizing: border-box; 
+}
+
+.header-container h4 {
+  margin: 0; 
+}
+
+.textarea-field {
+  width: 100%; /* Make the container span the full width of the page */
+  display: flex;
+  flex-direction: column; /* Stack label and textarea vertically */
+  align-items: flex-start; /* Left-align label and textarea */
+  box-sizing: border-box; /* Include padding and border in calculations */
+}
+
+.textarea-field label {
+  margin-bottom: 5px; /* Space between label and textarea */
+}
+
+textarea {
+  width: 90%; /* Make the textarea span the full width of the parent */
+  border: 1px solid #ccc; /* Standard border */
+  border-radius: 4px; /* Slightly rounded corners */
+  padding: 8px; /* Add padding inside the textarea */
+  font-family: 'Arial', sans-serif; /* Consistent font */
+  font-size: 0.8em; 
+  box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+.field-note {
+  color: rgb(108, 108, 108); 
+  font-size: 0.75em; 
+  margin-top: 5px; 
+}
+
+.checkbox-group {
+  display: flex; /* Align all checkboxes and labels in a single line */
+  flex-wrap: wrap; /* Allow wrapping to the next line if the content overflows */
+  gap: 5px; /* Add space between each checkbox and label pair */
+}
+
+.checkbox-group div {
+  display: flex; /* Align each checkbox and label horizontally */
+  align-items: center; /* Vertically align the checkbox and label */
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column; /* Stack the label and input vertically */
+  align-items: flex-start; /* Left-align the label and input */
+  margin-bottom: 10px; /* Add some space between this field and the next element */
+}
+
+.date-field label {
+  margin-bottom: 5px; /* Add space between the label and the input field */
+}
+
+.date-container {
+  display: flex; /* Align all child elements horizontally */
+  flex-wrap: wrap; /* Allow wrapping to the next line if there's not enough space */
+  gap: 20px; /* Add space between each date field */
+}
+
+.date-field input {
+  width: auto; /* Automatically adjust to content or container */
+  min-width: 150px; /* Ensure a minimum width for usability */
+  max-width: 100%; /* Ensure it doesn't exceed its container's width */
+  box-sizing: border-box; /* Include padding and borders in the width calculation */
+}
+
+.radio-group {
+  display: flex; 
+  flex-wrap: wrap; /* Allow wrapping if there are many items */
+  align-items: flex-start; /* Center-align the items vertically */
+  gap: 10px; /* Add space between the items */
+}
+
+.radio-group div input {
+  display: flex; /* Align each radio button and label horizontally */
+  align-items: flex-start; /* Vertically align the radio button and label */
+}
+
+.radio-group div label {
+  align-items: center; /* Vertically align the radio button and label */
 }

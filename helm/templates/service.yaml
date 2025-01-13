@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: staff-update-form
+  labels:
+    app.kubernetes.io/name: staff-update-form
+spec:
+  selector:
+    app.kubernetes.io/name: staff-update-form
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 8080

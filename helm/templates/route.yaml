@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: staff-update-form
+  labels:
+    app.kubernetes.io/name: staff-update-form
+spec:
+  to:
+    kind: Service
+    name: staff-update-form
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge

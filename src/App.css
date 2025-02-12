@@ -209,3 +209,28 @@ textarea {
 .radio-group div label {
   align-items: center; /* Vertically align the radio button and label */
 }
+
+button {
+  font-family: 'Arial', sans-serif; /* Replace with your chosen font */
+  font-size: 14px; /* Adjust size as needed */
+  color: #333;     /* Example text color */
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.custom-button {
+  font-family: 'Arial', sans-serif; /* Use the same font */
+  font-size: 14px;
+  color: #333;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  border-radius: 4px;
+  display: inline-block;
+  text-align: center;
+}
+

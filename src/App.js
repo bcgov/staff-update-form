@@ -2500,11 +2500,8 @@ function App() {
                 id="attachments"
                 name="attachments"
                 onChange={handleFileChange}
-                multiple // Allows multiple file selection, remove if not needed
-                style={{ display: 'none' }}  // Hide the native file input
               />
-              <label htmlFor="attachments" className="custom-button">Browse</label>
-              </div>
+              </div><p></p>
             <div>
               {attachments.map((attachment, index) => (
                 <div key={index} style={{ marginBottom: '10px' }}>

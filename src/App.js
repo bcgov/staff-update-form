@@ -1731,7 +1731,7 @@ function App() {
                           id="send_from"
                           name="mailbox_radio"
                           value="send_from"
-                          checked={formData.mailbox_change === 'send_from'}
+                          checked={formData.mailbox_radio === 'send_from'}
                           onChange={handleInputChange}
                         />
                         <label htmlFor="send_from">'Send From' access</label>
@@ -1742,7 +1742,7 @@ function App() {
                           id="ownership"
                           name="mailbox_radio"
                           value="ownership"
-                          checked={formData.mailbox_change === 'ownership'}
+                          checked={formData.mailbox_radio === 'ownership'}
                           onChange={handleInputChange}
                         />
                         <label htmlFor="ownership">Mailbox ownership</label>
@@ -1753,7 +1753,7 @@ function App() {
                           id="backup"
                           name="mailbox_radio"
                           value="backup"
-                          checked={formData.mailbox_change === 'backup'}
+                          checked={formData.mailbox_radio === 'backup'}
                           onChange={handleInputChange}
                         />
                         <label htmlFor="backup">Backup ownershipe</label>
@@ -1764,7 +1764,7 @@ function App() {
                           id="removal"
                           name="mailbox_radio"
                           value="removal"
-                          checked={formData.mailbox_change === 'removal'}
+                          checked={formData.mailbox_radio === 'removal'}
                           onChange={handleInputChange}
                         />
                         <label htmlFor="removal">Removal</label>

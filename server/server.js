@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-require('dotenv').config(); // to load environment variables from a .env file
+//require('dotenv').config(); // to load environment variables from a .env file
 
 const app = express();
 

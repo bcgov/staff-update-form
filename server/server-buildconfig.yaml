@@ -1,0 +1,37 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: staff-update-form-server
+  namespace: bcd07f-tools
+  labels:
+    app: staff-update-form-server
+    app.kubernetes.io/component: staff-update-form-server
+    app.kubernetes.io/instance: staff-update-form-server
+spec:
+  nodeSelector: null
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/bcgov/staff-update-form.git'
+    contextDir: server
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'node:16-alpine'
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'staff-update-form-server:latest'
+  triggers:
+    - type: GitHub
+      github:
+        secret: YOUR_SERVER_GITHUB_SECRET
+    - type: Generic
+      generic:
+        secret: YOUR_SERVER_GENERIC_SECRET
+    - type: ConfigChange
+    - type: ImageChange
+status:
+  lastVersion: 0

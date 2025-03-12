@@ -2,7 +2,26 @@ import './App.css';
 import logo from './logo.png';
 import banner from './banner.png';
 import { useState } from 'react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
+const generatePDF = async () => {
+  // Capture the form or the specific DOM element that contains the form data.
+  const formElement = document.getElementById('form-to-pdf'); // Add an id to your form element
+
+  // Convert the element to a canvas
+  const canvas = await html2canvas(formElement);
+  const imgData = canvas.toDataURL('image/png');
+
+  // Create a new jsPDF instance
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const imgProps = pdf.getImageProperties(imgData);
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  return pdf.output('datauristring'); // Returns the PDF as a data URI string
+};
 
 function App() {
   // State to capture form data
@@ -47,11 +66,38 @@ function App() {
   };
 
   // handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
     setSubmitted(true);
-    console.log('Form submitted:', formData); // Debugging: Log data
+    console.log('Form submitted:', formData);
+  
+    try {
+      // Generate the PDF
+      const pdfDataUri = await generatePDF();
+  
+      // Define the email recipient (you can hard-code this or get it from your form)
+      const recipientEmail = 'recipient@example.com';
+  
+      // Send the PDF to your backend API
+      const response = await fetch('https://your-backend-endpoint/send-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pdfData: pdfDataUri,
+          email: recipientEmail,
+        }),
+      });
+  
+      if (response.ok) {
+        console.log('Email sent successfully!');
+      } else {
+        console.error('Error sending email');
+      }
+    } catch (error) {
+      console.error('Error generating PDF or sending email:', error);
+    }
   };
+  
 
   return (
     <div className="App">
@@ -75,7 +121,7 @@ function App() {
         </section>
 
         {!submitted ? (
-          <form onSubmit={handleSubmit}>
+          <form id="form-to-pdf" onSubmit={handleSubmit}>
             <div className="form-grid">
               <div>
                 <label htmlFor="firstname">
@@ -1756,7 +1802,7 @@ function App() {
                           checked={formData.mailbox_radio === 'backup'}
                           onChange={handleInputChange}
                         />
-                        <label htmlFor="backup">Backup ownershipe</label>
+                        <label htmlFor="backup">Backup ownership</label>
                       </div>
                       <div>
                         <input

@@ -189,7 +189,7 @@ function App() {
               </div>
               <div>
                 <label htmlFor="classification">
-                  <span className="required">*</span> Employee Classification/Title:
+                  Employee Classification/Title:
                 </label>
                 <select
                   id="classification"
@@ -236,7 +236,7 @@ function App() {
               </div>
               <div>
                 <label htmlFor="office">
-                  <span className="required">*</span> Employee Physical Office:
+                  Employee Physical Office:
                 </label>
                 <select
                   id="office"
@@ -334,7 +334,7 @@ function App() {
               </div>
               <div>
                 <label htmlFor="program_area">
-                  <span className="required">*</span> Employee Branch/Program Area:
+                  Employee Branch/Program Area:
                 </label>
                 <select
                   id="program_area"
@@ -345,7 +345,6 @@ function App() {
                   <option value="">Please Select:</option>
                   <option value="Community Integration Service">Community Integration Service</option>
                   <option value="Community Services">Community Services</option>
-                  <option value="Community Services - Provincial Profiling Team">Community Services - Provincial Profiling Team</option>
                   <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
                   <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
                   <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
@@ -358,7 +357,6 @@ function App() {
                   <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
                   <option value="PLMS - START">PLMS - START</option>
                   <option value="Strategic Service Branch">Strategic Service Branch</option>
-                  <option value="Virtual Service - After Hours">Virtual Service - After Hours</option>
                   <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
                   <option value="Virtual Service - Intake">Virtual Service - Intake</option>
                   <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
@@ -380,7 +378,7 @@ function App() {
               </div>
               <div>
                 <label htmlFor="paylist">
-                  <span className="required">*</span> Employee Paylist:
+                  Employee Paylist:
                 </label>
                 <input
                   id="paylist"
@@ -415,7 +413,7 @@ function App() {
               </div>
               <div>
                 <label htmlFor="employee_email">
-                  <span className="required">*</span> Employee Email:
+                  Employee Email:
                 </label>
                 <input
                   id="employee_email"
@@ -594,7 +592,6 @@ function App() {
                       <option value="">Please Select:</option>
                       <option value="Community Integration Service">Community Integration Service</option>
                       <option value="Community Services">Community Services</option>
-                      <option value="Community Services - Provincial Profiling Team">Community Services - Provincial Profiling Team</option>
                       <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
                       <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
                       <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
@@ -607,7 +604,6 @@ function App() {
                       <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
                       <option value="PLMS - START">PLMS - START</option>
                       <option value="Strategic Service Branch">Strategic Service Branch</option>
-                      <option value="Virtual Service - After Hours">Virtual Service - After Hours</option>
                       <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
                       <option value="Virtual Service - Intake">Virtual Service - Intake</option>
                       <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
@@ -730,7 +726,7 @@ function App() {
                   <>
                     <div>
                       <label htmlFor="transfer_ministry">
-                        <span className="required">*</span> The Division or Ministry the employee is transferring to:
+                        The Division or Ministry the employee is transferring to:
                       </label><br></br>
                       <input
                         id="transfer_ministry"
@@ -738,12 +734,11 @@ function App() {
                         name="transfer_ministry"
                         value={formData.transfer_ministry}
                         onChange={handleInputChange}
-                        required
                       />
                     </div>
                     <div>
                       <label htmlFor="transfer_supervisor">
-                        <span className="required">*</span> Who will their direct report be? (supervisor/manager)
+                        Who will their direct report be? (supervisor/manager)
                       </label><br></br>
                       <input
                         id="transfer_supervisor"
@@ -751,7 +746,6 @@ function App() {
                         name="transfer_supervisor"
                         value={formData.transfer_supervisor}
                         onChange={handleInputChange}
-                        required
                       />
                     </div><br></br>
                   </>
@@ -859,7 +853,6 @@ function App() {
                         name="staffing_request_num"
                         value={formData.staffing_request_num}
                         onChange={handleInputChange}
-                        required
                       />
                     </div>
                     <div>
@@ -872,7 +865,6 @@ function App() {
                         name="position_number_TA"
                         value={formData.position_number_TA}
                         onChange={handleInputChange}
-                        required
                       />
                     </div>
                     <div>
@@ -885,7 +877,6 @@ function App() {
                         name="position_number_SR"
                         value={formData.position_number_SR}
                         onChange={handleInputChange}
-                        required
                       />
                     </div>
                     <div>
@@ -913,7 +904,6 @@ function App() {
                         <option value="">Please Select:</option>
                         <option value="Community Integration Service">Community Integration Service</option>
                         <option value="Community Services">Community Services</option>
-                        <option value="Community Services - Provincial Profiling Team">Community Services - Provincial Profiling Team</option>
                         <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
                         <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
                         <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
@@ -926,7 +916,6 @@ function App() {
                         <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
                         <option value="PLMS - START">PLMS - START</option>
                         <option value="Strategic Service Branch">Strategic Service Branch</option>
-                        <option value="Virtual Service - After Hours">Virtual Service - After Hours</option>
                         <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
                         <option value="Virtual Service - Intake">Virtual Service - Intake</option>
                         <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
@@ -1118,7 +1107,7 @@ function App() {
                 </div>
                 <div>
                   <label htmlFor="movement_staffing_req_num">
-                    <span className="required">*</span> Staffing Request Number:
+                    Staffing Request Number:
                   </label><br></br>
                   <input
                     id="movement_staffing_req_num"
@@ -1126,7 +1115,6 @@ function App() {
                     name="movement_staffing_req_num"
                     value={formData.movement_staffing_req_num}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
                 <div>
@@ -1157,7 +1145,7 @@ function App() {
                 </div>
                 <div>
                   <label htmlFor="movement_classification">
-                    <span className="required">*</span> Employee Classification/Title:
+                    Employee Classification/Title:
                   </label><br></br>
                   <select
                     id="movement_classification"
@@ -1204,7 +1192,7 @@ function App() {
                 </div>
                 <div>
                   <label htmlFor="movement_office">
-                    <span className="required">*</span> Employee Physical Office:
+                    Employee Physical Office:
                   </label><br></br>
                   <select
                     id="movement_office"
@@ -1302,7 +1290,7 @@ function App() {
                 </div>
                 <div>
                   <label htmlFor="movement_program_area">
-                    <span className="required">*</span> Employee Branch/Program Area:
+                    Employee Branch/Program Area:
                   </label><br></br>
                   <select
                     id="movement_program_area"
@@ -1313,7 +1301,6 @@ function App() {
                     <option value="">Please Select:</option>
                     <option value="Community Integration Service">Community Integration Service</option>
                     <option value="Community Services">Community Services</option>
-                    <option value="Community Services - Provincial Profiling Team">Community Services - Provincial Profiling Team</option>
                     <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
                     <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
                     <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
@@ -1326,7 +1313,6 @@ function App() {
                     <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
                     <option value="PLMS - START">PLMS - START</option>
                     <option value="Strategic Service Branch">Strategic Service Branch</option>
-                    <option value="Virtual Service - After Hours">Virtual Service - After Hours</option>
                     <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
                     <option value="Virtual Service - Intake">Virtual Service - Intake</option>
                     <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
@@ -2126,7 +2112,6 @@ function App() {
                           <option value="">Please Select:</option>
                           <option value="Community Integration Service">Community Integration Service</option>
                           <option value="Community Services">Community Services</option>
-                          <option value="Community Services - Provincial Profiling Team">Community Services - Provincial Profiling Team</option>
                           <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
                           <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
                           <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
@@ -2139,7 +2124,6 @@ function App() {
                           <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
                           <option value="PLMS - START">PLMS - START</option>
                           <option value="Strategic Service Branch">Strategic Service Branch</option>
-                          <option value="Virtual Service - After Hours">Virtual Service - After Hours</option>
                           <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
                           <option value="Virtual Service - Intake">Virtual Service - Intake</option>
                           <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
@@ -2328,7 +2312,7 @@ function App() {
                 </div>
                 <div>
                   <label htmlFor="transfer_supervisor">
-                    <span className="required">*</span> Receiving Supervisor at new ministry/division:
+                    Receiving Supervisor at new ministry/division:
                   </label><br></br>
                   <input
                     id="transfer_supervisor"
@@ -2375,7 +2359,6 @@ function App() {
                       name="return_date"
                       value={formData.return_date || ''}
                       onChange={handleInputChange}
-                      required
                     />
                   </div>
                   </>
@@ -2564,7 +2547,7 @@ function App() {
             </div>
 
             <br></br>
-            <button type="submit">Submit</button>
+            <button type="submit" style={{ backgroundColor: '#2172ff', color: 'white' }}>Email</button>
           </form>
         ) : (
           <div>

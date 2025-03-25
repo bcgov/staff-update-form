@@ -4,6 +4,11 @@ import banner from './banner.png';
 import { useState } from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import ProgramAreaDropdown from './ProgramAreaDropdown';
+import paylistMapping from './programAreaPaylistMapping';
+import JobTitleDropdown from './JobTitleDropdown';
+import classificationMapping from './jobTitleClassificationMapping';
+import OfficeDropdown from './OfficeDropdown';
 
 const generatePDF = async () => {
   // Capture the form or the specific DOM element that contains the form data.
@@ -25,9 +30,10 @@ const generatePDF = async () => {
 
 function App() {
   // State to capture form data
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({   
     name: '',
     email: '',
+    comments: "Please do not include unnecessary private information in the comments",
     attachments: []
   });
 
@@ -37,10 +43,70 @@ function App() {
   // handle input changes
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    // Update program_area and auto-populate paylist based on program_area mapping
+    if (name === 'program_area') {
+      const updatedPaylist = paylistMapping[value] || '';
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        program_area: value,
+        paylist: updatedPaylist,
+      }));   
+    } else if (name === 'updated_program_area') {
+      const updatedPaylist = paylistMapping[value] || '';
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        updated_program_area: value,
+        updated_paylist: updatedPaylist,
+      }));   
+    } else if (name === 'ta_program_area') {
+      const updatedPaylist = paylistMapping[value] || '';
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        ta_program_area: value,
+        ta_paylist: updatedPaylist,
+      }));   
+    } else if (name === 'movement_program_area') {
+      const updatedPaylist = paylistMapping[value] || '';
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        movement_program_area: value,
+        movement_paylist: updatedPaylist,
+      }));    
+    } else if (name === 'new_hire_program_area') {
+      const updatedPaylist = paylistMapping[value] || '';
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        new_hire_program_area: value,
+        new_hire_paylist: updatedPaylist,
+      }));   
+    // Update job_title and auto-populate classification based on job_title mapping
+    } else if (name === 'job_title') {
+      const updatedClassification = classificationMapping[value] || '';
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        job_title: value,
+        classification: updatedClassification,
+      }));
+    } else if (name === 'movement_job_title') {
+      const updatedClassification = classificationMapping[value] || '';
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        movement_job_title: value,
+        movement_classification: updatedClassification,
+      }));
+    } else if (name === 'return_job_title') {
+      const updatedClassification = classificationMapping[value] || '';
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        return_job_title: value,
+        return_classification: updatedClassification,
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+    }
   };
 
    // handle form attachments
@@ -187,182 +253,36 @@ function App() {
                   required
                 />
               </div>
+              <JobTitleDropdown
+                id="job_title"
+                name="job_title"
+                value={formData.job_title}
+                onChange={handleInputChange}
+              />
               <div>
                 <label htmlFor="classification">
-                  Employee Classification/Title:
+                  Employee Classification:
                 </label>
-                <select
+                <input
                   id="classification"
+                  type="text"
                   name="classification"
                   value={formData.classification}
                   onChange={handleInputChange}
-                >
-                  <option value="">Please Select:</option>
-                  <option value="Adjudicator">Adjudicator</option>
-                  <option value="AO 18">AO 18</option>
-                  <option value="AO 21">AO 21</option>
-                  <option value="AO 24">AO 24</option>
-                  <option value="Assistant Supervisor">Assistant Supervisor</option>
-                  <option value="Branch Supervisor">Branch Supervisor</option>
-                  <option value="Clerk 9">Clerk 9</option>
-                  <option value="Clerk 12">Clerk 12</option>
-                  <option value="Clerk 15">Clerk 15</option>
-                  <option value="Client Service Representative">Client Service Representative</option>
-                  <option value="Client Service Worker">Client Service Worker</option>
-                  <option value="Community Integration Specialist">Community Integration Specialist</option>
-                  <option value="Community Relations & Service Quality Manager">Community Relations & Service Quality Manager</option>
-                  <option value="Contract Analyst">Contract Analyst</option>
-                  <option value="Corporate Services Administrator">Corporate Services Administrator</option>
-                  <option value="Director">Director</option>
-                  <option value="Employment and Assistance Worker">Employment and Assistance Worker</option>
-                  <option value="Executive Director">Executive Director</option>
-                  <option value="FO 15">FO 15</option>
-                  <option value="FO 18">FO 18</option>
-                  <option value="FO 21">FO 21</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Ministry Investigator">Ministry Investigator</option>
-                  <option value="Performance Analyst">Performance Analyst</option>
-                  <option value="Policy Analyst">Policy Analyst</option>
-                  <option value="Program Analyst">Program Analyst</option>
-                  <option value="Project Analyst">Project Analyst</option>
-                  <option value="Quality and Compliance Specialist">Quality and Compliance Specialist</option>
-                  <option value="Quality Assurance Analyst">Quality Assurance Analyst</option>
-                  <option value="Quality Management Analyst">Quality Management Analyst</option>
-                  <option value="Senior Business Analyst">Senior Business Analyst</option>
-                  <option value="Supervisor">Supervisor</option>
-                  <option value="Supervisor Admin Service">Supervisor Admin Service</option>
-                  <option value="Other">Other</option>
-                </select>
+                />
               </div>
-              <div>
-                <label htmlFor="office">
-                  Employee Physical Office:
-                </label>
-                <select
-                  id="office"
-                  name="office"
-                  value={formData.office}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Please Select:</option>
-                  <option value="055 Victoria Contact Center">055 Victoria Contact Center</option>
-                  <option value="070 Health and Specialized Services">070 Health and Specialized Services</option>
-                  <option value="100 Nanaimo">100 Nanaimo</option>
-                  <option value="100 Victoria Regional">100 Victoria Regional</option>
-                  <option value="106 Vefra Victoria">106 Vefra Victoria</option>
-                  <option value="107 Gateway Victoria">107 Gateway Victoria</option>
-                  <option value="129 Duncan">129 Duncan</option>
-                  <option value="132 Nanaimo South">132 Nanaimo South</option>
-                  <option value="135 Nanaimo North">135 Nanaimo North</option>
-                  <option value="138 Port Alberni">138 Port Alberni</option>
-                  <option value="139 Courtney">139 Courtney</option>
-                  <option value="141 Powell River">141 Powell River</option>
-                  <option value="143 Campbell River">143 Campbell River</option>
-                  <option value="144 Port Hardy (SBC)">144 Port Hardy (SBC)</option>
-                  <option value="251 Dockside">251 Dockside</option>
-                  <option value="253 Strathcona">253 Strathcona</option>
-                  <option value="254 Kiwassa">254 Kiwassa</option>
-                  <option value="256 Grandview">256 Grandview</option>
-                  <option value="262 West End">262 West End</option>
-                  <option value="265 Mountainview">265 Mountainview</option>
-                  <option value="270 North Shore">270 North Shore</option>
-                  <option value="272 Sechelt">272 Sechelt</option>
-                  <option value="280 Richmond">280 Richmond</option>
-                  <option value="313 Burnaby Metro Point">313 Burnaby Metro Point</option>
-                  <option value="315 New Westminister">315 New Westminister</option>
-                  <option value="322 Surrey North">322 Surrey North</option>
-                  <option value="326 Park Place">326 Park Place</option>
-                  <option value="327 Fleetwood">327 Fleetwood</option>
-                  <option value="328 Langley">328 Langley</option>
-                  <option value="330 Abbotsford">330 Abbotsford</option>
-                  <option value="331 Chilliwack">331 Chilliwack</option>
-                  <option value="333 Hope">333 Hope</option>
-                  <option value="334 Mission">334 Mission</option>
-                  <option value="335 Maple Ridge">335 Maple Ridge</option>
-                  <option value="337 Tri-Cities">337 Tri-Cities</option>
-                  <option value="350 Lower Mainland Conact Centre (LMCC)">350 Lower Mainland Conact Centre (LMCC)</option>
-                  <option value="400 Kamloops Regional">400 Kamloops Regional</option>
-                  <option value="403 Kelowna Landmark">403 Kelowna Landmark</option>
-                  <option value="411 Cranbrook (SBC)">411 Cranbrook (SBC)</option>
-                  <option value="412 Fernie (SBC)">412 Fernie (SBC)</option>
-                  <option value="413 Golden (SBC)">413 Golden (SBC)</option>
-                  <option value="420 Grand Forks (SBC)">420 Grand Forks (SBC)</option>
-                  <option value="421 Trail">421 Trail</option>
-                  <option value="422 Nelson">422 Nelson</option>
-                  <option value="432 Nakusp (SBC)">432 Nakusp (SBC)</option>
-                  <option value="430 Princeton (SBC)">430 Princeton (SBC)</option>
-                  <option value="431 Oliver">431 Oliver</option>
-                  <option value="432 Penticton">432 Penticton</option>
-                  <option value="433 Westbank (West Kelowna)">433 Westbank (West Kelowna)</option>
-                  <option value="434 Kelowna">434 Kelowna</option>
-                  <option value="460 Vernon">460 Vernon</option>
-                  <option value="463 Salmon Arm (SBC)">463 Salmon Arm (SBC)</option>
-                  <option value="470 Kamloops Contact Centre (ICC)">470 Kamloops Contact Centre (ICC)</option>
-                  <option value="471 Kamloops South">471 Kamloops South</option>
-                  <option value="472 Kamloops North">472 Kamloops North</option>
-                  <option value="474 Merritt (SBC)">474 Merritt (SBC)</option>
-                  <option value="480 100 Mile House">480 100 Mile House</option>
-                  <option value="481 Williams Lake">481 Williams Lake</option>
-                  <option value="482 Quesnel">482 Quesnel</option>
-                  <option value="500 Prince George Regional">500 Prince George Regional</option>
-                  <option value="510 Mackenzie (SBC)">510 Mackenzie (SBC)</option>
-                  <option value="511 Dawson Creek (SBC)">511 Dawson Creek (SBC)</option>
-                  <option value="513 Fort St John (SBC)">513 Fort St John (SBC)</option>
-                  <option value="583 Prince George Contact Centre (NCC)">583 Prince George Contact Centre (NCC)</option>
-                  <option value="585 Prince George">585 Prince George</option>
-                  <option value="589 Smithers (SBC)">589 Smithers (SBC)</option>
-                  <option value="594 Terrace (SBC)">594 Terrace (SBC)</option>
-                  <option value="596 Prince Rupert">596 Prince Rupert</option>
-                  <option value="597 Masset (SBC)">597 Masset (SBC)</option>
-                  <option value="989 Victoria (Belmont)">989 Victoria (Belmont)</option>
-                  <option value="904 HITT (PLMS)">904 HITT (PLMS)</option>
-                  <option value="932 CIU (108A)">932 CIU (108A)</option>
-                  <option value="934 START (PLMS)">934 START (PLMS)</option>
-                  <option value="996 Admin (PLMS)">996 Admin (PLMS)</option>
-                  <option value="997 SQ (PLMS)">997 SQ (PLMS)</option>
-                  <option value="0X5 Prince George (4th Ave)">0X5 Prince George (4th Ave)</option>
-                  <option value="X10 Vefra Victoria (Pandora)">X10 Vefra Victoria (Pandora)</option>
-                  <option value="X12 Operations Management (PLMS)">X12 Operations Management (PLMS)</option>
-                  <option value="X20 Metro Vancouver">X20 Metro Vancouver</option>
-                  <option value="X21 Metro Vancouver">X21 Metro Vancouver</option>
-                  <option value="X30 Metro Vancouver">X30 Metro Vancouver</option>
-                  <option value="X31 Surrey (King George)">X31 Surrey (King George)</option>
-                  <option value="X40 Kelowna (Richter)">X40 Kelowna (Richter)</option>
-                  <option value="X41 Kamloops">X41 Kamloops</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="program_area">
-                  Employee Branch/Program Area:
-                </label>
-                <select
-                  id="program_area"
-                  name="program_area"
-                  value={formData.program_area}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Please Select:</option>
-                  <option value="Community Integration Service">Community Integration Service</option>
-                  <option value="Community Services">Community Services</option>
-                  <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
-                  <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
-                  <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
-                  <option value="Operations Support - Recruitment, Staffing, Facilities and Assets">Operations Support - Recruitment, Staffing, Facilities and Assets</option>
-                  <option value="PLMS - Administrative Team">PLMS - Administrative Team</option>
-                  <option value="PLMS - Enforcement">PLMS - Enforcement</option>
-                  <option value="PLMS - Operations Management">PLMS - Operations Management</option>
-                  <option value="PLMS - Program Integrity and Evaluation">PLMS - Program Integrity and Evaluation</option>
-                  <option value="PLMS - Prevention and Compliance">PLMS - Prevention and Compliance</option>
-                  <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
-                  <option value="PLMS - START">PLMS - START</option>
-                  <option value="Strategic Service Branch">Strategic Service Branch</option>
-                  <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
-                  <option value="Virtual Service - Intake">Virtual Service - Intake</option>
-                  <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
-                  <option value="Not Applicable">Not Applicable</option>
-                </select>
-              </div>
+              <OfficeDropdown
+                id="office"
+                name="office"
+                value={formData.office}
+                onChange={handleInputChange}
+              />
+              <ProgramAreaDropdown
+                id="program_area"
+                name="program_area"
+                value={formData.program_area}
+                onChange={handleInputChange}
+              />
               <div>
                 <label htmlFor="supervisor">
                   <span className="required">*</span> Employee's Supervisor:
@@ -450,7 +370,7 @@ function App() {
                   <p>Request for an information change may include a change of:</p>
                   <ul>
                     <li>Name or title</li>
-                    <li>Office of Location</li>
+                    <li>Office or Location</li>
                     <li>Supervisor</li>
                     <li>Branch and Unit/Team</li>
                     <li>ICM information</li>
@@ -469,104 +389,12 @@ function App() {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div>
-                    <label htmlFor="updated_office">
-                      Updated Physical Office:
-                    </label>
-                    <select
-                      id="updated_office"
-                      name="updated_office"
-                      value={formData.updated_office}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Please Select:</option>
-                      <option value="055 Victoria Contact Center">055 Victoria Contact Center</option>
-                      <option value="070 Health and Specialized Services">070 Health and Specialized Services</option>
-                      <option value="100 Nanaimo">100 Nanaimo</option>
-                      <option value="100 Victoria Regional">100 Victoria Regional</option>
-                      <option value="106 Vefra Victoria">106 Vefra Victoria</option>
-                      <option value="107 Gateway Victoria">107 Gateway Victoria</option>
-                      <option value="129 Duncan">129 Duncan</option>
-                      <option value="132 Nanaimo South">132 Nanaimo South</option>
-                      <option value="135 Nanaimo North">135 Nanaimo North</option>
-                      <option value="138 Port Alberni">138 Port Alberni</option>
-                      <option value="139 Courtney">139 Courtney</option>
-                      <option value="141 Powell River">141 Powell River</option>
-                      <option value="143 Campbell River">143 Campbell River</option>
-                      <option value="144 Port Hardy (SBC)">144 Port Hardy (SBC)</option>
-                      <option value="251 Dockside">251 Dockside</option>
-                      <option value="253 Strathcona">253 Strathcona</option>
-                      <option value="254 Kiwassa">254 Kiwassa</option>
-                      <option value="256 Grandview">256 Grandview</option>
-                      <option value="262 West End">262 West End</option>
-                      <option value="265 Mountainview">265 Mountainview</option>
-                      <option value="270 North Shore">270 North Shore</option>
-                      <option value="272 Sechelt">272 Sechelt</option>
-                      <option value="280 Richmond">280 Richmond</option>
-                      <option value="313 Burnaby Metro Point">313 Burnaby Metro Point</option>
-                      <option value="315 New Westminister">315 New Westminister</option>
-                      <option value="322 Surrey North">322 Surrey North</option>
-                      <option value="326 Park Place">326 Park Place</option>
-                      <option value="327 Fleetwood">327 Fleetwood</option>
-                      <option value="328 Langley">328 Langley</option>
-                      <option value="330 Abbotsford">330 Abbotsford</option>
-                      <option value="331 Chilliwack">331 Chilliwack</option>
-                      <option value="333 Hope">333 Hope</option>
-                      <option value="334 Mission">334 Mission</option>
-                      <option value="335 Maple Ridge">335 Maple Ridge</option>
-                      <option value="337 Tri-Cities">337 Tri-Cities</option>
-                      <option value="350 Lower Mainland Conact Centre (LMCC)">350 Lower Mainland Conact Centre (LMCC)</option>
-                      <option value="400 Kamloops Regional">400 Kamloops Regional</option>
-                      <option value="403 Kelowna Landmark">403 Kelowna Landmark</option>
-                      <option value="411 Cranbrook (SBC)">411 Cranbrook (SBC)</option>
-                      <option value="412 Fernie (SBC)">412 Fernie (SBC)</option>
-                      <option value="413 Golden (SBC)">413 Golden (SBC)</option>
-                      <option value="420 Grand Forks (SBC)">420 Grand Forks (SBC)</option>
-                      <option value="421 Trail">421 Trail</option>
-                      <option value="422 Nelson">422 Nelson</option>
-                      <option value="432 Nakusp (SBC)">432 Nakusp (SBC)</option>
-                      <option value="430 Princeton (SBC)">430 Princeton (SBC)</option>
-                      <option value="431 Oliver">431 Oliver</option>
-                      <option value="432 Penticton">432 Penticton</option>
-                      <option value="433 Westbank (West Kelowna)">433 Westbank (West Kelowna)</option>
-                      <option value="434 Kelowna">434 Kelowna</option>
-                      <option value="460 Vernon">460 Vernon</option>
-                      <option value="463 Salmon Arm (SBC)">463 Salmon Arm (SBC)</option>
-                      <option value="470 Kamloops Contact Centre (ICC)">470 Kamloops Contact Centre (ICC)</option>
-                      <option value="471 Kamloops South">471 Kamloops South</option>
-                      <option value="472 Kamloops North">472 Kamloops North</option>
-                      <option value="474 Merritt (SBC)">474 Merritt (SBC)</option>
-                      <option value="480 100 Mile House">480 100 Mile House</option>
-                      <option value="481 Williams Lake">481 Williams Lake</option>
-                      <option value="482 Quesnel">482 Quesnel</option>
-                      <option value="500 Prince George Regional">500 Prince George Regional</option>
-                      <option value="510 Mackenzie (SBC)">510 Mackenzie (SBC)</option>
-                      <option value="511 Dawson Creek (SBC)">511 Dawson Creek (SBC)</option>
-                      <option value="513 Fort St John (SBC)">513 Fort St John (SBC)</option>
-                      <option value="583 Prince George Contact Centre (NCC)">583 Prince George Contact Centre (NCC)</option>
-                      <option value="585 Prince George">585 Prince George</option>
-                      <option value="589 Smithers (SBC)">589 Smithers (SBC)</option>
-                      <option value="594 Terrace (SBC)">594 Terrace (SBC)</option>
-                      <option value="596 Prince Rupert">596 Prince Rupert</option>
-                      <option value="597 Masset (SBC)">597 Masset (SBC)</option>
-                      <option value="989 Victoria (Belmont)">989 Victoria (Belmont)</option>
-                      <option value="904 HITT (PLMS)">904 HITT (PLMS)</option>
-                      <option value="932 CIU (108A)">932 CIU (108A)</option>
-                      <option value="934 START (PLMS)">934 START (PLMS)</option>
-                      <option value="996 Admin (PLMS)">996 Admin (PLMS)</option>
-                      <option value="997 SQ (PLMS)">997 SQ (PLMS)</option>
-                      <option value="0X5 Prince George (4th Ave)">0X5 Prince George (4th Ave)</option>
-                      <option value="X10 Vefra Victoria (Pandora)">X10 Vefra Victoria (Pandora)</option>
-                      <option value="X12 Operations Management (PLMS)">X12 Operations Management (PLMS)</option>
-                      <option value="X20 Metro Vancouver">X20 Metro Vancouver</option>
-                      <option value="X21 Metro Vancouver">X21 Metro Vancouver</option>
-                      <option value="X30 Metro Vancouver">X30 Metro Vancouver</option>
-                      <option value="X31 Surrey (King George)">X31 Surrey (King George)</option>
-                      <option value="X40 Kelowna (Richter)">X40 Kelowna (Richter)</option>
-                      <option value="X41 Kamloops">X41 Kamloops</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
+                  <OfficeDropdown
+                    id="updated_office"
+                    name="updated_office"
+                    value={formData.updated_office}
+                    onChange={handleInputChange}
+                  />
                   <div>
                     <label htmlFor="updated_supervisor">
                       Updated Supervisor:
@@ -579,49 +407,12 @@ function App() {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div>
-                    <label htmlFor="updated_program_area">
-                      Updated Branch/Program Area:
-                    </label>
-                    <select
-                      id="updated_program_area"
-                      name="updated_program_area"
-                      value={formData.updated_program_area}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Please Select:</option>
-                      <option value="Community Integration Service">Community Integration Service</option>
-                      <option value="Community Services">Community Services</option>
-                      <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
-                      <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
-                      <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
-                      <option value="Operations Support - Recruitment, Staffing, Facilities and Assets">Operations Support - Recruitment, Staffing, Facilities and Assets</option>
-                      <option value="PLMS - Administrative Team">PLMS - Administrative Team</option>
-                      <option value="PLMS - Enforcement">PLMS - Enforcement</option>
-                      <option value="PLMS - Operations Management">PLMS - Operations Management</option>
-                      <option value="PLMS - Program Integrity and Evaluation">PLMS - Program Integrity and Evaluation</option>
-                      <option value="PLMS - Prevention and Compliance">PLMS - Prevention and Compliance</option>
-                      <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
-                      <option value="PLMS - START">PLMS - START</option>
-                      <option value="Strategic Service Branch">Strategic Service Branch</option>
-                      <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
-                      <option value="Virtual Service - Intake">Virtual Service - Intake</option>
-                      <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
-                      <option value="Not Applicable">Not Applicable</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="updated_service_office">
-                      Updated ICM Service Office:
-                    </label>
-                    <input
-                      id="updated_service_office"
-                      type="text"
-                      name="updated_service_office"
-                      value={formData.updated_service_office}
-                      onChange={handleInputChange}
-                    />
-                  </div>
+                  <ProgramAreaDropdown
+                    id="updated_program_area"
+                    name="updated_program_area"
+                    value={formData.updated_program_area}
+                    onChange={handleInputChange}
+                  />
                   <div>
                     <label htmlFor="updated_paylist">
                       Updated Paylist:
@@ -633,7 +424,19 @@ function App() {
                       value={formData.updated_paylist}
                       onChange={handleInputChange}
                     />
+                  </div><div>
+                    <label htmlFor="updated_service_office">
+                      Updated ICM Service Office:
+                    </label>
+                    <input
+                      id="updated_service_office"
+                      type="text"
+                      name="updated_service_office"
+                      value={formData.updated_service_office}
+                      onChange={handleInputChange}
+                    />
                   </div>
+                  
                 </div><br></br>
                 <div className="radio-group">
                   <label>Are there access requests associated with this information change?</label>
@@ -891,46 +694,21 @@ function App() {
                         onChange={handleInputChange}
                       />
                     </div>
+                    <ProgramAreaDropdown
+                      id="ta_program_area"
+                      name="ta_program_area"
+                      value={formData.ta_program_area}
+                      onChange={handleInputChange}
+                    />
                     <div>
-                      <label htmlFor="program_area">
-                        Employee Branch/Program Area:
-                      </label><br></br>
-                      <select
-                        id="program_area"
-                        name="program_area"
-                        value={formData.program_area}
-                        onChange={handleInputChange}
-                      >
-                        <option value="">Please Select:</option>
-                        <option value="Community Integration Service">Community Integration Service</option>
-                        <option value="Community Services">Community Services</option>
-                        <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
-                        <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
-                        <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
-                        <option value="Operations Support - Recruitment, Staffing, Facilities and Assets">Operations Support - Recruitment, Staffing, Facilities and Assets</option>
-                        <option value="PLMS - Administrative Team">PLMS - Administrative Team</option>
-                        <option value="PLMS - Enforcement">PLMS - Enforcement</option>
-                        <option value="PLMS - Operations Management">PLMS - Operations Management</option>
-                        <option value="PLMS - Program Integrity and Evaluation">PLMS - Program Integrity and Evaluation</option>
-                        <option value="PLMS - Prevention and Compliance">PLMS - Prevention and Compliance</option>
-                        <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
-                        <option value="PLMS - START">PLMS - START</option>
-                        <option value="Strategic Service Branch">Strategic Service Branch</option>
-                        <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
-                        <option value="Virtual Service - Intake">Virtual Service - Intake</option>
-                        <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
-                        <option value="Not Applicable">Not Applicable</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="paylist">
+                      <label htmlFor="ta_paylist">
                         Employee Paylist:
                       </label><br></br>
                       <input
-                        id="paylist"
+                        id="ta_paylist"
                         type="text"
-                        name="paylist"
-                        value={formData.paylist}
+                        name="ta_paylist"
+                        value={formData.ta_paylist}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -1143,182 +921,50 @@ function App() {
                     required
                   />
                 </div>
+                <JobTitleDropdown
+                  id="movement_job_title"
+                  name="movement_job_title"
+                  value={formData.movement_job_title}
+                  onChange={handleInputChange}
+                />
                 <div>
                   <label htmlFor="movement_classification">
-                    Employee Classification/Title:
-                  </label><br></br>
-                  <select
+                    Employee Classification:
+                  </label>
+                  <br></br>
+                  <input
                     id="movement_classification"
+                    type="text"
                     name="movement_classification"
                     value={formData.movement_classification}
                     onChange={handleInputChange}
-                  >
-                    <option value="">Please Select:</option>
-                    <option value="Adjudicator">Adjudicator</option>
-                    <option value="AO 18">AO 18</option>
-                    <option value="AO 21">AO 21</option>
-                    <option value="AO 24">AO 24</option>
-                    <option value="Assistant Supervisor">Assistant Supervisor</option>
-                    <option value="Branch Supervisor">Branch Supervisor</option>
-                    <option value="Clerk 9">Clerk 9</option>
-                    <option value="Clerk 12">Clerk 12</option>
-                    <option value="Clerk 15">Clerk 15</option>
-                    <option value="Client Service Representative">Client Service Representative</option>
-                    <option value="Client Service Worker">Client Service Worker</option>
-                    <option value="Community Integration Specialist">Community Integration Specialist</option>
-                    <option value="Community Relations & Service Quality Manager">Community Relations & Service Quality Manager</option>
-                    <option value="Contract Analyst">Contract Analyst</option>
-                    <option value="Corporate Services Administrator">Corporate Services Administrator</option>
-                    <option value="Director">Director</option>
-                    <option value="Employment and Assistance Worker">Employment and Assistance Worker</option>
-                    <option value="Executive Director">Executive Director</option>
-                    <option value="FO 15">FO 15</option>
-                    <option value="FO 18">FO 18</option>
-                    <option value="FO 21">FO 21</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Ministry Investigator">Ministry Investigator</option>
-                    <option value="Performance Analyst">Performance Analyst</option>
-                    <option value="Policy Analyst">Policy Analyst</option>
-                    <option value="Program Analyst">Program Analyst</option>
-                    <option value="Project Analyst">Project Analyst</option>
-                    <option value="Quality and Compliance Specialist">Quality and Compliance Specialist</option>
-                    <option value="Quality Assurance Analyst">Quality Assurance Analyst</option>
-                    <option value="Quality Management Analyst">Quality Management Analyst</option>
-                    <option value="Senior Business Analyst">Senior Business Analyst</option>
-                    <option value="Supervisor">Supervisor</option>
-                    <option value="Supervisor Admin Service">Supervisor Admin Service</option>
-                    <option value="Other">Other</option>
-                  </select>
+                  />
                 </div>
+                <OfficeDropdown
+                  id="movement_office"
+                  name="movement_office"
+                  value={formData.movement_office}
+                  onChange={handleInputChange}
+                />
+                <ProgramAreaDropdown
+                  id="movement_program_area"
+                  name="movement_program_area"
+                  value={formData.movement_program_area}
+                  onChange={handleInputChange}
+                />
                 <div>
-                  <label htmlFor="movement_office">
-                    Employee Physical Office:
+                  <label htmlFor="movement_paylist">
+                    Employee Paylist:
                   </label><br></br>
-                  <select
-                    id="movement_office"
-                    name="movement_office"
-                    value={formData.movement_office}
+                  <input
+                    id="movement_paylist"
+                    type="text"
+                    name="movement_paylist"
+                    value={formData.movement_paylist}
                     onChange={handleInputChange}
-                  >
-                    <option value="">Please Select:</option>
-                    <option value="055 Victoria Contact Center">055 Victoria Contact Center</option>
-                    <option value="070 Health and Specialized Services">070 Health and Specialized Services</option>
-                    <option value="100 Nanaimo">100 Nanaimo</option>
-                    <option value="100 Victoria Regional">100 Victoria Regional</option>
-                    <option value="106 Vefra Victoria">106 Vefra Victoria</option>
-                    <option value="107 Gateway Victoria">107 Gateway Victoria</option>
-                    <option value="129 Duncan">129 Duncan</option>
-                    <option value="132 Nanaimo South">132 Nanaimo South</option>
-                    <option value="135 Nanaimo North">135 Nanaimo North</option>
-                    <option value="138 Port Alberni">138 Port Alberni</option>
-                    <option value="139 Courtney">139 Courtney</option>
-                    <option value="141 Powell River">141 Powell River</option>
-                    <option value="143 Campbell River">143 Campbell River</option>
-                    <option value="144 Port Hardy (SBC)">144 Port Hardy (SBC)</option>
-                    <option value="251 Dockside">251 Dockside</option>
-                    <option value="253 Strathcona">253 Strathcona</option>
-                    <option value="254 Kiwassa">254 Kiwassa</option>
-                    <option value="256 Grandview">256 Grandview</option>
-                    <option value="262 West End">262 West End</option>
-                    <option value="265 Mountainview">265 Mountainview</option>
-                    <option value="270 North Shore">270 North Shore</option>
-                    <option value="272 Sechelt">272 Sechelt</option>
-                    <option value="280 Richmond">280 Richmond</option>
-                    <option value="313 Burnaby Metro Point">313 Burnaby Metro Point</option>
-                    <option value="315 New Westminister">315 New Westminister</option>
-                    <option value="322 Surrey North">322 Surrey North</option>
-                    <option value="326 Park Place">326 Park Place</option>
-                    <option value="327 Fleetwood">327 Fleetwood</option>
-                    <option value="328 Langley">328 Langley</option>
-                    <option value="330 Abbotsford">330 Abbotsford</option>
-                    <option value="331 Chilliwack">331 Chilliwack</option>
-                    <option value="333 Hope">333 Hope</option>
-                    <option value="334 Mission">334 Mission</option>
-                    <option value="335 Maple Ridge">335 Maple Ridge</option>
-                    <option value="337 Tri-Cities">337 Tri-Cities</option>
-                    <option value="350 Lower Mainland Conact Centre (LMCC)">350 Lower Mainland Conact Centre (LMCC)</option>
-                    <option value="400 Kamloops Regional">400 Kamloops Regional</option>
-                    <option value="403 Kelowna Landmark">403 Kelowna Landmark</option>
-                    <option value="411 Cranbrook (SBC)">411 Cranbrook (SBC)</option>
-                    <option value="412 Fernie (SBC)">412 Fernie (SBC)</option>
-                    <option value="413 Golden (SBC)">413 Golden (SBC)</option>
-                    <option value="420 Grand Forks (SBC)">420 Grand Forks (SBC)</option>
-                    <option value="421 Trail">421 Trail</option>
-                    <option value="422 Nelson">422 Nelson</option>
-                    <option value="432 Nakusp (SBC)">432 Nakusp (SBC)</option>
-                    <option value="430 Princeton (SBC)">430 Princeton (SBC)</option>
-                    <option value="431 Oliver">431 Oliver</option>
-                    <option value="432 Penticton">432 Penticton</option>
-                    <option value="433 Westbank (West Kelowna)">433 Westbank (West Kelowna)</option>
-                    <option value="434 Kelowna">434 Kelowna</option>
-                    <option value="460 Vernon">460 Vernon</option>
-                    <option value="463 Salmon Arm (SBC)">463 Salmon Arm (SBC)</option>
-                    <option value="470 Kamloops Contact Centre (ICC)">470 Kamloops Contact Centre (ICC)</option>
-                    <option value="471 Kamloops South">471 Kamloops South</option>
-                    <option value="472 Kamloops North">472 Kamloops North</option>
-                    <option value="474 Merritt (SBC)">474 Merritt (SBC)</option>
-                    <option value="480 100 Mile House">480 100 Mile House</option>
-                    <option value="481 Williams Lake">481 Williams Lake</option>
-                    <option value="482 Quesnel">482 Quesnel</option>
-                    <option value="500 Prince George Regional">500 Prince George Regional</option>
-                    <option value="510 Mackenzie (SBC)">510 Mackenzie (SBC)</option>
-                    <option value="511 Dawson Creek (SBC)">511 Dawson Creek (SBC)</option>
-                    <option value="513 Fort St John (SBC)">513 Fort St John (SBC)</option>
-                    <option value="583 Prince George Contact Centre (NCC)">583 Prince George Contact Centre (NCC)</option>
-                    <option value="585 Prince George">585 Prince George</option>
-                    <option value="589 Smithers (SBC)">589 Smithers (SBC)</option>
-                    <option value="594 Terrace (SBC)">594 Terrace (SBC)</option>
-                    <option value="596 Prince Rupert">596 Prince Rupert</option>
-                    <option value="597 Masset (SBC)">597 Masset (SBC)</option>
-                    <option value="989 Victoria (Belmont)">989 Victoria (Belmont)</option>
-                    <option value="904 HITT (PLMS)">904 HITT (PLMS)</option>
-                    <option value="932 CIU (108A)">932 CIU (108A)</option>
-                    <option value="934 START (PLMS)">934 START (PLMS)</option>
-                    <option value="996 Admin (PLMS)">996 Admin (PLMS)</option>
-                    <option value="997 SQ (PLMS)">997 SQ (PLMS)</option>
-                    <option value="0X5 Prince George (4th Ave)">0X5 Prince George (4th Ave)</option>
-                    <option value="X10 Vefra Victoria (Pandora)">X10 Vefra Victoria (Pandora)</option>
-                    <option value="X12 Operations Management (PLMS)">X12 Operations Management (PLMS)</option>
-                    <option value="X20 Metro Vancouver">X20 Metro Vancouver</option>
-                    <option value="X21 Metro Vancouver">X21 Metro Vancouver</option>
-                    <option value="X30 Metro Vancouver">X30 Metro Vancouver</option>
-                    <option value="X31 Surrey (King George)">X31 Surrey (King George)</option>
-                    <option value="X40 Kelowna (Richter)">X40 Kelowna (Richter)</option>
-                    <option value="X41 Kamloops">X41 Kamloops</option>
-                    <option value="Other">Other</option>
-                  </select>
+                  />
                 </div>
-                <div>
-                  <label htmlFor="movement_program_area">
-                    Employee Branch/Program Area:
-                  </label><br></br>
-                  <select
-                    id="movement_program_area"
-                    name="movement_program_area"
-                    value={formData.movement_program_area}
-                    onChange={handleInputChange}
-                  >
-                    <option value="">Please Select:</option>
-                    <option value="Community Integration Service">Community Integration Service</option>
-                    <option value="Community Services">Community Services</option>
-                    <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
-                    <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
-                    <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
-                    <option value="Operations Support - Recruitment, Staffing, Facilities and Assets">Operations Support - Recruitment, Staffing, Facilities and Assets</option>
-                    <option value="PLMS - Administrative Team">PLMS - Administrative Team</option>
-                    <option value="PLMS - Enforcement">PLMS - Enforcement</option>
-                    <option value="PLMS - Operations Management">PLMS - Operations Management</option>
-                    <option value="PLMS - Program Integrity and Evaluation">PLMS - Program Integrity and Evaluation</option>
-                    <option value="PLMS - Prevention and Compliance">PLMS - Prevention and Compliance</option>
-                    <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
-                    <option value="PLMS - START">PLMS - START</option>
-                    <option value="Strategic Service Branch">Strategic Service Branch</option>
-                    <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
-                    <option value="Virtual Service - Intake">Virtual Service - Intake</option>
-                    <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
-                    <option value="Not Applicable">Not Applicable</option>
-                  </select>
-                </div><br></br>
+                <br></br>
               </>
             )}
             {formData.request_type === 'Leave - Departing/Returning' && (
@@ -1404,151 +1050,31 @@ function App() {
                 {formData.leave === 'no' && (
                   <>
                     <div className="form-grid">
+                      <JobTitleDropdown
+                        id="return_job_title"
+                        name="return_job_title"
+                        value={formData.return_job_title}
+                        onChange={handleInputChange}
+                      />
                       <div>
                         <label htmlFor="return_classification">
-                          Position upon return:
+                          Employee Classification:
                         </label>
-                        <select
+                        <br></br>
+                        <input
                           id="return_classification"
+                          type="text"
                           name="return_classification"
                           value={formData.return_classification}
                           onChange={handleInputChange}
-                        >
-                          <option value="">Please Select:</option>
-                          <option value="Adjudicator">Adjudicator</option>
-                          <option value="AO 18">AO 18</option>
-                          <option value="AO 21">AO 21</option>
-                          <option value="AO 24">AO 24</option>
-                          <option value="Assistant Supervisor">Assistant Supervisor</option>
-                          <option value="Branch Supervisor">Branch Supervisor</option>
-                          <option value="Clerk 9">Clerk 9</option>
-                          <option value="Clerk 12">Clerk 12</option>
-                          <option value="Clerk 15">Clerk 15</option>
-                          <option value="Client Service Representative">Client Service Representative</option>
-                          <option value="Client Service Worker">Client Service Worker</option>
-                          <option value="Community Integration Specialist">Community Integration Specialist</option>
-                          <option value="Community Relations & Service Quality Manager">Community Relations & Service Quality Manager</option>
-                          <option value="Contract Analyst">Contract Analyst</option>
-                          <option value="Corporate Services Administrator">Corporate Services Administrator</option>
-                          <option value="Director">Director</option>
-                          <option value="Employment and Assistance Worker">Employment and Assistance Worker</option>
-                          <option value="Executive Director">Executive Director</option>
-                          <option value="FO 15">FO 15</option>
-                          <option value="FO 18">FO 18</option>
-                          <option value="FO 21">FO 21</option>
-                          <option value="Manager">Manager</option>
-                          <option value="Ministry Investigator">Ministry Investigator</option>
-                          <option value="Performance Analyst">Performance Analyst</option>
-                          <option value="Policy Analyst">Policy Analyst</option>
-                          <option value="Program Analyst">Program Analyst</option>
-                          <option value="Project Analyst">Project Analyst</option>
-                          <option value="Quality and Compliance Specialist">Quality and Compliance Specialist</option>
-                          <option value="Quality Assurance Analyst">Quality Assurance Analyst</option>
-                          <option value="Quality Management Analyst">Quality Management Analyst</option>
-                          <option value="Senior Business Analyst">Senior Business Analyst</option>
-                          <option value="Supervisor">Supervisor</option>
-                          <option value="Supervisor Admin Service">Supervisor Admin Service</option>
-                          <option value="Other">Other</option>
-                        </select>
+                        />
                       </div>
-                      <div>
-                        <label htmlFor="return_office">
-                          Location upon return:
-                        </label>
-                        <select
-                          id="return_office"
-                          name="return_office"
-                          value={formData.return_office}
-                          onChange={handleInputChange}
-                        >
-                          <option value="">Please Select:</option>
-                          <option value="055 Victoria Contact Center">055 Victoria Contact Center</option>
-                          <option value="070 Health and Specialized Services">070 Health and Specialized Services</option>
-                          <option value="100 Nanaimo">100 Nanaimo</option>
-                          <option value="100 Victoria Regional">100 Victoria Regional</option>
-                          <option value="106 Vefra Victoria">106 Vefra Victoria</option>
-                          <option value="107 Gateway Victoria">107 Gateway Victoria</option>
-                          <option value="129 Duncan">129 Duncan</option>
-                          <option value="132 Nanaimo South">132 Nanaimo South</option>
-                          <option value="135 Nanaimo North">135 Nanaimo North</option>
-                          <option value="138 Port Alberni">138 Port Alberni</option>
-                          <option value="139 Courtney">139 Courtney</option>
-                          <option value="141 Powell River">141 Powell River</option>
-                          <option value="143 Campbell River">143 Campbell River</option>
-                          <option value="144 Port Hardy (SBC)">144 Port Hardy (SBC)</option>
-                          <option value="251 Dockside">251 Dockside</option>
-                          <option value="253 Strathcona">253 Strathcona</option>
-                          <option value="254 Kiwassa">254 Kiwassa</option>
-                          <option value="256 Grandview">256 Grandview</option>
-                          <option value="262 West End">262 West End</option>
-                          <option value="265 Mountainview">265 Mountainview</option>
-                          <option value="270 North Shore">270 North Shore</option>
-                          <option value="272 Sechelt">272 Sechelt</option>
-                          <option value="280 Richmond">280 Richmond</option>
-                          <option value="313 Burnaby Metro Point">313 Burnaby Metro Point</option>
-                          <option value="315 New Westminister">315 New Westminister</option>
-                          <option value="322 Surrey North">322 Surrey North</option>
-                          <option value="326 Park Place">326 Park Place</option>
-                          <option value="327 Fleetwood">327 Fleetwood</option>
-                          <option value="328 Langley">328 Langley</option>
-                          <option value="330 Abbotsford">330 Abbotsford</option>
-                          <option value="331 Chilliwack">331 Chilliwack</option>
-                          <option value="333 Hope">333 Hope</option>
-                          <option value="334 Mission">334 Mission</option>
-                          <option value="335 Maple Ridge">335 Maple Ridge</option>
-                          <option value="337 Tri-Cities">337 Tri-Cities</option>
-                          <option value="350 Lower Mainland Conact Centre (LMCC)">350 Lower Mainland Conact Centre (LMCC)</option>
-                          <option value="400 Kamloops Regional">400 Kamloops Regional</option>
-                          <option value="403 Kelowna Landmark">403 Kelowna Landmark</option>
-                          <option value="411 Cranbrook (SBC)">411 Cranbrook (SBC)</option>
-                          <option value="412 Fernie (SBC)">412 Fernie (SBC)</option>
-                          <option value="413 Golden (SBC)">413 Golden (SBC)</option>
-                          <option value="420 Grand Forks (SBC)">420 Grand Forks (SBC)</option>
-                          <option value="421 Trail">421 Trail</option>
-                          <option value="422 Nelson">422 Nelson</option>
-                          <option value="432 Nakusp (SBC)">432 Nakusp (SBC)</option>
-                          <option value="430 Princeton (SBC)">430 Princeton (SBC)</option>
-                          <option value="431 Oliver">431 Oliver</option>
-                          <option value="432 Penticton">432 Penticton</option>
-                          <option value="433 Westbank (West Kelowna)">433 Westbank (West Kelowna)</option>
-                          <option value="434 Kelowna">434 Kelowna</option>
-                          <option value="460 Vernon">460 Vernon</option>
-                          <option value="463 Salmon Arm (SBC)">463 Salmon Arm (SBC)</option>
-                          <option value="470 Kamloops Contact Centre (ICC)">470 Kamloops Contact Centre (ICC)</option>
-                          <option value="471 Kamloops South">471 Kamloops South</option>
-                          <option value="472 Kamloops North">472 Kamloops North</option>
-                          <option value="474 Merritt (SBC)">474 Merritt (SBC)</option>
-                          <option value="480 100 Mile House">480 100 Mile House</option>
-                          <option value="481 Williams Lake">481 Williams Lake</option>
-                          <option value="482 Quesnel">482 Quesnel</option>
-                          <option value="500 Prince George Regional">500 Prince George Regional</option>
-                          <option value="510 Mackenzie (SBC)">510 Mackenzie (SBC)</option>
-                          <option value="511 Dawson Creek (SBC)">511 Dawson Creek (SBC)</option>
-                          <option value="513 Fort St John (SBC)">513 Fort St John (SBC)</option>
-                          <option value="583 Prince George Contact Centre (NCC)">583 Prince George Contact Centre (NCC)</option>
-                          <option value="585 Prince George">585 Prince George</option>
-                          <option value="589 Smithers (SBC)">589 Smithers (SBC)</option>
-                          <option value="594 Terrace (SBC)">594 Terrace (SBC)</option>
-                          <option value="596 Prince Rupert">596 Prince Rupert</option>
-                          <option value="597 Masset (SBC)">597 Masset (SBC)</option>
-                          <option value="989 Victoria (Belmont)">989 Victoria (Belmont)</option>
-                          <option value="904 HITT (PLMS)">904 HITT (PLMS)</option>
-                          <option value="932 CIU (108A)">932 CIU (108A)</option>
-                          <option value="934 START (PLMS)">934 START (PLMS)</option>
-                          <option value="996 Admin (PLMS)">996 Admin (PLMS)</option>
-                          <option value="997 SQ (PLMS)">997 SQ (PLMS)</option>
-                          <option value="0X5 Prince George (4th Ave)">0X5 Prince George (4th Ave)</option>
-                          <option value="X10 Vefra Victoria (Pandora)">X10 Vefra Victoria (Pandora)</option>
-                          <option value="X12 Operations Management (PLMS)">X12 Operations Management (PLMS)</option>
-                          <option value="X20 Metro Vancouver">X20 Metro Vancouver</option>
-                          <option value="X21 Metro Vancouver">X21 Metro Vancouver</option>
-                          <option value="X30 Metro Vancouver">X30 Metro Vancouver</option>
-                          <option value="X31 Surrey (King George)">X31 Surrey (King George)</option>
-                          <option value="X40 Kelowna (Richter)">X40 Kelowna (Richter)</option>
-                          <option value="X41 Kamloops">X41 Kamloops</option>
-                          <option value="Other">Other</option>
-                        </select>
-                      </div>
+                      <OfficeDropdown
+                        id="return_office"
+                        name="return_office"
+                        value={formData.return_office}
+                        onChange={handleInputChange}
+                      />
                       <div>
                         <label htmlFor="updated_office">
                           ICM service office:
@@ -1995,102 +1521,12 @@ function App() {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <div>
-                        <label htmlFor="vital_office">Office:</label><br />
-                        <select
-                          id="vital_office"
-                          name="vital_office"
-                          value={formData.vital_office}
-                          onChange={handleInputChange}
-                        >
-                        <option value="">Please Select:</option>
-                        <option value="055 Victoria Contact Center">055 Victoria Contact Center</option>
-                        <option value="070 Health and Specialized Services">070 Health and Specialized Services</option>
-                        <option value="100 Nanaimo">100 Nanaimo</option>
-                        <option value="100 Victoria Regional">100 Victoria Regional</option>
-                        <option value="106 Vefra Victoria">106 Vefra Victoria</option>
-                        <option value="107 Gateway Victoria">107 Gateway Victoria</option>
-                        <option value="129 Duncan">129 Duncan</option>
-                        <option value="132 Nanaimo South">132 Nanaimo South</option>
-                        <option value="135 Nanaimo North">135 Nanaimo North</option>
-                        <option value="138 Port Alberni">138 Port Alberni</option>
-                        <option value="139 Courtney">139 Courtney</option>
-                        <option value="141 Powell River">141 Powell River</option>
-                        <option value="143 Campbell River">143 Campbell River</option>
-                        <option value="144 Port Hardy (SBC)">144 Port Hardy (SBC)</option>
-                        <option value="251 Dockside">251 Dockside</option>
-                        <option value="253 Strathcona">253 Strathcona</option>
-                        <option value="254 Kiwassa">254 Kiwassa</option>
-                        <option value="256 Grandview">256 Grandview</option>
-                        <option value="262 West End">262 West End</option>
-                        <option value="265 Mountainview">265 Mountainview</option>
-                        <option value="270 North Shore">270 North Shore</option>
-                        <option value="272 Sechelt">272 Sechelt</option>
-                        <option value="280 Richmond">280 Richmond</option>
-                        <option value="313 Burnaby Metro Point">313 Burnaby Metro Point</option>
-                        <option value="315 New Westminister">315 New Westminister</option>
-                        <option value="322 Surrey North">322 Surrey North</option>
-                        <option value="326 Park Place">326 Park Place</option>
-                        <option value="327 Fleetwood">327 Fleetwood</option>
-                        <option value="328 Langley">328 Langley</option>
-                        <option value="330 Abbotsford">330 Abbotsford</option>
-                        <option value="331 Chilliwack">331 Chilliwack</option>
-                        <option value="333 Hope">333 Hope</option>
-                        <option value="334 Mission">334 Mission</option>
-                        <option value="335 Maple Ridge">335 Maple Ridge</option>
-                        <option value="337 Tri-Cities">337 Tri-Cities</option>
-                        <option value="350 Lower Mainland Conact Centre (LMCC)">350 Lower Mainland Conact Centre (LMCC)</option>
-                        <option value="400 Kamloops Regional">400 Kamloops Regional</option>
-                        <option value="403 Kelowna Landmark">403 Kelowna Landmark</option>
-                        <option value="411 Cranbrook (SBC)">411 Cranbrook (SBC)</option>
-                        <option value="412 Fernie (SBC)">412 Fernie (SBC)</option>
-                        <option value="413 Golden (SBC)">413 Golden (SBC)</option>
-                        <option value="420 Grand Forks (SBC)">420 Grand Forks (SBC)</option>
-                        <option value="421 Trail">421 Trail</option>
-                        <option value="422 Nelson">422 Nelson</option>
-                        <option value="432 Nakusp (SBC)">432 Nakusp (SBC)</option>
-                        <option value="430 Princeton (SBC)">430 Princeton (SBC)</option>
-                        <option value="431 Oliver">431 Oliver</option>
-                        <option value="432 Penticton">432 Penticton</option>
-                        <option value="433 Westbank (West Kelowna)">433 Westbank (West Kelowna)</option>
-                        <option value="434 Kelowna">434 Kelowna</option>
-                        <option value="460 Vernon">460 Vernon</option>
-                        <option value="463 Salmon Arm (SBC)">463 Salmon Arm (SBC)</option>
-                        <option value="470 Kamloops Contact Centre (ICC)">470 Kamloops Contact Centre (ICC)</option>
-                        <option value="471 Kamloops South">471 Kamloops South</option>
-                        <option value="472 Kamloops North">472 Kamloops North</option>
-                        <option value="474 Merritt (SBC)">474 Merritt (SBC)</option>
-                        <option value="480 100 Mile House">480 100 Mile House</option>
-                        <option value="481 Williams Lake">481 Williams Lake</option>
-                        <option value="482 Quesnel">482 Quesnel</option>
-                        <option value="500 Prince George Regional">500 Prince George Regional</option>
-                        <option value="510 Mackenzie (SBC)">510 Mackenzie (SBC)</option>
-                        <option value="511 Dawson Creek (SBC)">511 Dawson Creek (SBC)</option>
-                        <option value="513 Fort St John (SBC)">513 Fort St John (SBC)</option>
-                        <option value="583 Prince George Contact Centre (NCC)">583 Prince George Contact Centre (NCC)</option>
-                        <option value="585 Prince George">585 Prince George</option>
-                        <option value="589 Smithers (SBC)">589 Smithers (SBC)</option>
-                        <option value="594 Terrace (SBC)">594 Terrace (SBC)</option>
-                        <option value="596 Prince Rupert">596 Prince Rupert</option>
-                        <option value="597 Masset (SBC)">597 Masset (SBC)</option>
-                        <option value="989 Victoria (Belmont)">989 Victoria (Belmont)</option>
-                        <option value="904 HITT (PLMS)">904 HITT (PLMS)</option>
-                        <option value="932 CIU (108A)">932 CIU (108A)</option>
-                        <option value="934 START (PLMS)">934 START (PLMS)</option>
-                        <option value="996 Admin (PLMS)">996 Admin (PLMS)</option>
-                        <option value="997 SQ (PLMS)">997 SQ (PLMS)</option>
-                        <option value="0X5 Prince George (4th Ave)">0X5 Prince George (4th Ave)</option>
-                        <option value="X10 Vefra Victoria (Pandora)">X10 Vefra Victoria (Pandora)</option>
-                        <option value="X12 Operations Management (PLMS)">X12 Operations Management (PLMS)</option>
-                        <option value="X20 Metro Vancouver">X20 Metro Vancouver</option>
-                        <option value="X21 Metro Vancouver">X21 Metro Vancouver</option>
-                        <option value="X30 Metro Vancouver">X30 Metro Vancouver</option>
-                        <option value="X31 Surrey (King George)">X31 Surrey (King George)</option>
-                        <option value="X40 Kelowna (Richter)">X40 Kelowna (Richter)</option>
-                        <option value="X41 Kamloops">X41 Kamloops</option>
-                        <option value="Other">Other</option>
-                      </select>
-                      </div>
+                      <OfficeDropdown
+                        id="vital_office"
+                        name="vital_office"
+                        value={formData.vital_office}
+                        onChange={handleInputChange}
+                      />
                     </div>
                     <br />
                   </>
@@ -2101,35 +1537,12 @@ function App() {
                       <strong>New hire details</strong>
                     </label>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                      <div>
-                        <label htmlFor="new_hire_program_area">Branch/Program Area:</label><br />
-                        <select
-                          id="new_hire_program_area"
-                          name="new_hire_program_area"
-                          value={formData.new_hire_program_area}
-                          onChange={handleInputChange}
-                        >
-                          <option value="">Please Select:</option>
-                          <option value="Community Integration Service">Community Integration Service</option>
-                          <option value="Community Services">Community Services</option>
-                          <option value="Operations Support - Analytics and Business Intelligence">Operations Support - Analytics and Business Intelligence</option>
-                          <option value="Operations Support - Communications, Engagement and Organizational Health">Operations Support - Communications, Engagement and Organizational Health</option>
-                          <option value="Operations Support - Finance, Contracts and Records Management">Operations Support - Finance, Contracts and Records Management</option>
-                          <option value="Operations Support - Recruitment, Staffing, Facilities and Assets">Operations Support - Recruitment, Staffing, Facilities and Assets</option>
-                          <option value="PLMS - Administrative Team">PLMS - Administrative Team</option>
-                          <option value="PLMS - Enforcement">PLMS - Enforcement</option>
-                          <option value="PLMS - Operations Management">PLMS - Operations Management</option>
-                          <option value="PLMS - Program Integrity and Evaluation">PLMS - Program Integrity and Evaluation</option>
-                          <option value="PLMS - Prevention and Compliance">PLMS - Prevention and Compliance</option>
-                          <option value="PLMS - Service Quality Team">PLMS - Service Quality Team</option>
-                          <option value="PLMS - START">PLMS - START</option>
-                          <option value="Strategic Service Branch">Strategic Service Branch</option>
-                          <option value="Virtual Service - Contact Centre">Virtual Service - Contact Centre</option>
-                          <option value="Virtual Service - Intake">Virtual Service - Intake</option>
-                          <option value="Virtual Service - Health and Specialized Services">Virtual Service - Health and Specialized Services</option>
-                          <option value="Not Applicable">Not Applicable</option>
-                        </select>
-                      </div>
+                      <ProgramAreaDropdown
+                        id="new_hire_program_area"
+                        name="new_hire_program_area"
+                        value={formData.new_hire_program_area}
+                        onChange={handleInputChange}
+                      />
                       <div>
                         <label htmlFor="new_hire_position">Position:</label>
                         <input
@@ -2140,102 +1553,12 @@ function App() {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <div>
-                        <label htmlFor="new_hire_office">Office:</label><br />
-                        <select
-                          id="new_hire_office"
-                          name="new_hire_office"
-                          value={formData.new_hire_office}
-                          onChange={handleInputChange}
-                        >
-                        <option value="">Please Select:</option>
-                        <option value="055 Victoria Contact Center">055 Victoria Contact Center</option>
-                        <option value="070 Health and Specialized Services">070 Health and Specialized Services</option>
-                        <option value="100 Nanaimo">100 Nanaimo</option>
-                        <option value="100 Victoria Regional">100 Victoria Regional</option>
-                        <option value="106 Vefra Victoria">106 Vefra Victoria</option>
-                        <option value="107 Gateway Victoria">107 Gateway Victoria</option>
-                        <option value="129 Duncan">129 Duncan</option>
-                        <option value="132 Nanaimo South">132 Nanaimo South</option>
-                        <option value="135 Nanaimo North">135 Nanaimo North</option>
-                        <option value="138 Port Alberni">138 Port Alberni</option>
-                        <option value="139 Courtney">139 Courtney</option>
-                        <option value="141 Powell River">141 Powell River</option>
-                        <option value="143 Campbell River">143 Campbell River</option>
-                        <option value="144 Port Hardy (SBC)">144 Port Hardy (SBC)</option>
-                        <option value="251 Dockside">251 Dockside</option>
-                        <option value="253 Strathcona">253 Strathcona</option>
-                        <option value="254 Kiwassa">254 Kiwassa</option>
-                        <option value="256 Grandview">256 Grandview</option>
-                        <option value="262 West End">262 West End</option>
-                        <option value="265 Mountainview">265 Mountainview</option>
-                        <option value="270 North Shore">270 North Shore</option>
-                        <option value="272 Sechelt">272 Sechelt</option>
-                        <option value="280 Richmond">280 Richmond</option>
-                        <option value="313 Burnaby Metro Point">313 Burnaby Metro Point</option>
-                        <option value="315 New Westminister">315 New Westminister</option>
-                        <option value="322 Surrey North">322 Surrey North</option>
-                        <option value="326 Park Place">326 Park Place</option>
-                        <option value="327 Fleetwood">327 Fleetwood</option>
-                        <option value="328 Langley">328 Langley</option>
-                        <option value="330 Abbotsford">330 Abbotsford</option>
-                        <option value="331 Chilliwack">331 Chilliwack</option>
-                        <option value="333 Hope">333 Hope</option>
-                        <option value="334 Mission">334 Mission</option>
-                        <option value="335 Maple Ridge">335 Maple Ridge</option>
-                        <option value="337 Tri-Cities">337 Tri-Cities</option>
-                        <option value="350 Lower Mainland Conact Centre (LMCC)">350 Lower Mainland Conact Centre (LMCC)</option>
-                        <option value="400 Kamloops Regional">400 Kamloops Regional</option>
-                        <option value="403 Kelowna Landmark">403 Kelowna Landmark</option>
-                        <option value="411 Cranbrook (SBC)">411 Cranbrook (SBC)</option>
-                        <option value="412 Fernie (SBC)">412 Fernie (SBC)</option>
-                        <option value="413 Golden (SBC)">413 Golden (SBC)</option>
-                        <option value="420 Grand Forks (SBC)">420 Grand Forks (SBC)</option>
-                        <option value="421 Trail">421 Trail</option>
-                        <option value="422 Nelson">422 Nelson</option>
-                        <option value="432 Nakusp (SBC)">432 Nakusp (SBC)</option>
-                        <option value="430 Princeton (SBC)">430 Princeton (SBC)</option>
-                        <option value="431 Oliver">431 Oliver</option>
-                        <option value="432 Penticton">432 Penticton</option>
-                        <option value="433 Westbank (West Kelowna)">433 Westbank (West Kelowna)</option>
-                        <option value="434 Kelowna">434 Kelowna</option>
-                        <option value="460 Vernon">460 Vernon</option>
-                        <option value="463 Salmon Arm (SBC)">463 Salmon Arm (SBC)</option>
-                        <option value="470 Kamloops Contact Centre (ICC)">470 Kamloops Contact Centre (ICC)</option>
-                        <option value="471 Kamloops South">471 Kamloops South</option>
-                        <option value="472 Kamloops North">472 Kamloops North</option>
-                        <option value="474 Merritt (SBC)">474 Merritt (SBC)</option>
-                        <option value="480 100 Mile House">480 100 Mile House</option>
-                        <option value="481 Williams Lake">481 Williams Lake</option>
-                        <option value="482 Quesnel">482 Quesnel</option>
-                        <option value="500 Prince George Regional">500 Prince George Regional</option>
-                        <option value="510 Mackenzie (SBC)">510 Mackenzie (SBC)</option>
-                        <option value="511 Dawson Creek (SBC)">511 Dawson Creek (SBC)</option>
-                        <option value="513 Fort St John (SBC)">513 Fort St John (SBC)</option>
-                        <option value="583 Prince George Contact Centre (NCC)">583 Prince George Contact Centre (NCC)</option>
-                        <option value="585 Prince George">585 Prince George</option>
-                        <option value="589 Smithers (SBC)">589 Smithers (SBC)</option>
-                        <option value="594 Terrace (SBC)">594 Terrace (SBC)</option>
-                        <option value="596 Prince Rupert">596 Prince Rupert</option>
-                        <option value="597 Masset (SBC)">597 Masset (SBC)</option>
-                        <option value="989 Victoria (Belmont)">989 Victoria (Belmont)</option>
-                        <option value="904 HITT (PLMS)">904 HITT (PLMS)</option>
-                        <option value="932 CIU (108A)">932 CIU (108A)</option>
-                        <option value="934 START (PLMS)">934 START (PLMS)</option>
-                        <option value="996 Admin (PLMS)">996 Admin (PLMS)</option>
-                        <option value="997 SQ (PLMS)">997 SQ (PLMS)</option>
-                        <option value="0X5 Prince George (4th Ave)">0X5 Prince George (4th Ave)</option>
-                        <option value="X10 Vefra Victoria (Pandora)">X10 Vefra Victoria (Pandora)</option>
-                        <option value="X12 Operations Management (PLMS)">X12 Operations Management (PLMS)</option>
-                        <option value="X20 Metro Vancouver">X20 Metro Vancouver</option>
-                        <option value="X21 Metro Vancouver">X21 Metro Vancouver</option>
-                        <option value="X30 Metro Vancouver">X30 Metro Vancouver</option>
-                        <option value="X31 Surrey (King George)">X31 Surrey (King George)</option>
-                        <option value="X40 Kelowna (Richter)">X40 Kelowna (Richter)</option>
-                        <option value="X41 Kamloops">X41 Kamloops</option>
-                        <option value="Other">Other</option>
-                        </select>
-                      </div>
+                      <OfficeDropdown
+                        id="new_hire_office"
+                        name="new_hire_office"
+                        value={formData.new_hire_office}
+                        onChange={handleInputChange}
+                      />
                       <div>
                         <label htmlFor="new_hire_service_office">ICM service office:</label><br />
                         <input

@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@tippyjs/react": "^4.2.6",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^5.6.3"
+  }
+}

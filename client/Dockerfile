@@ -8,6 +8,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 
+# Ensure react-scripts is executable
+RUN chmod +x ./node_modules/.bin/react-scripts
+
 # Copy the rest of the application code
 COPY . .
 

@@ -202,7 +202,6 @@ function App() {
                 </p>
               </div>
             )}          
-            <br></br><br></br>
             <div className="header-container">
               <h4 style={{ color: '#555555' }}>Current Information</h4>
             </div> 

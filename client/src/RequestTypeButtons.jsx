@@ -11,8 +11,9 @@ const RequestTypeButtons = ({ selected, onSelect }) => {
     "Change of Hours",
     "Position Movement",
     "Leave - Departing/Returning",
-    "Transfer to Another Ministry",
-    "Resignation, Retirement, or Termination"
+    "Exits: Transfer to Another Ministry",
+    "Exits: Resignation, Retirement, or Other",
+    "Other"
   ];
 
   const getTooltipText = (type) => {
@@ -28,16 +29,16 @@ const RequestTypeButtons = ({ selected, onSelect }) => {
     <div className="request-type-buttons">
       {requestTypes.map((type) => {
         const tooltipText = getTooltipText(type);
+        const isSelected = selected.includes(type);
         const button = (
           <button
             type="button"
-            className={`request-type-button ${selected === type ? 'selected' : ''}`}
+            className={`request-type-button ${isSelected ? 'selected' : ''}`}
             onClick={() => onSelect(type)}
           >
             {type}
           </button>
         );
-
         return tooltipText 
           ? (
             <Tippy key={type} content={tooltipText} delay={[0, 0]}>

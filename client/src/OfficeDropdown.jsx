@@ -92,7 +92,7 @@ const officeOptions = [
 const OfficeDropdown = ({ id, name, value, onChange }) => {
   return (
     <div>
-      <label htmlFor={id}>Employee Physical Office:</label>
+      <label htmlFor={id}>Employee Assigned Office:</label>
       <br></br>
       <select id={id} name={name} value={value} onChange={onChange}>
         {officeOptions.map((option) => (

@@ -80,7 +80,6 @@ const programAreaOptions = [
     { value: 'CISB - Van North Sunshine Sea-Sky', label: 'CISB - Van North Sunshine Sea-Sky' },
     { value: 'CISB - Fraser South', label: 'CISB - Fraser South' },
     { value: 'OSB - Finance, Contracts and Records Management', label: 'OSB - Finance, Contracts and Records Management' },
-    { value: 'OSB - Records Management', label: 'OSB - Records Management' },
     { value: 'OSB - Recruitment, Staffing, Facilities and Assets', label: 'OSB - Recruitment, Staffing, Facilities and Assets' },
     { value: 'OSB - Analytics and Business Intelligence', label: 'OSB - Analytics and Business Intelligence' },
     { value: 'OSB - Communications, Engagement and Organizational Health', label: 'OSB - Communications, Engagement and Organizational Health' },

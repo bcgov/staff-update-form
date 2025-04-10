@@ -32,6 +32,7 @@ const generatePDF = async () => {
 function App() {
   // State to capture form data
   const [formData, setFormData] = useState({   
+    request_type: [],
     name: '',
     email: '',
     comments: "Please do not include unnecessary private information in the comments",
@@ -110,15 +111,27 @@ function App() {
     }
   };
 
-  // Handler specifically for request type selection
+  // Toggle function for request types (multi-select)
   const handleRequestTypeSelect = (type) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      request_type: type,
-    }));
+    setFormData((prevData) => {
+      const currentSelections = prevData.request_type || [];
+      if (currentSelections.includes(type)) {
+        // Remove type if it's already selected
+        return {
+          ...prevData,
+          request_type: currentSelections.filter((t) => t !== type)
+        };
+      } else {
+        // Add the type to selections
+        return {
+          ...prevData,
+          request_type: [...currentSelections, type]
+        };
+      }
+    });
   };
 
-   // handle form attachments
+  // handle form attachments
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files); // Convert FileList to an array
     setFormData((prevData) => ({
@@ -193,15 +206,22 @@ function App() {
                 selected={formData.request_type}
                 onSelect={handleRequestTypeSelect}
               />
-              <p className="field-note">We are unable to mirror the access of an existing employee</p>
             </div>
-            {["Information Change", "Temporary Appointment or Acting Opportunities", "Change of Hours", "Position Movement"].includes(formData.request_type) && (
-              <div className="request-type-info">
-                <p>
-                  Please fill in the employee's information in the <b>Current Information</b> section of the form, and their new information in the <b>{formData.request_type}</b> section below
-                </p>
-              </div>
-            )}          
+            {formData.request_type && formData.request_type.length > 0 && (
+              formData.request_type.length === 1 ? (
+                <div className="request-type-info">
+                  <p>
+                    Please fill in the employee's details in the <b>Current Information</b> section of the form, and their <b>{formData.request_type[0]}</b> details in the section below.
+                  </p>
+                </div>
+              ) : (
+                <div className="request-type-info">
+                  <p>
+                    Please fill in the employee's details in the <b>Current Information</b> section of the form, and their <b>Updated Information</b> in the sections below.
+                  </p>
+                </div>
+              )
+            )}       
             <div className="header-container">
               <h4 style={{ color: '#555555' }}>Current Information</h4>
             </div> 
@@ -260,13 +280,26 @@ function App() {
               </div>
               <div>
                 <label htmlFor="idir">
-                  <span className="required">*</span> Employee Username IDIR):
+                  <span className="required">*</span> Employee Username (IDIR):
                 </label>
                 <input
                   id="idir"
                   type="text"
                   name="idir"
                   value={formData.idir}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="supervisor">
+                  <span className="required">*</span> Employee's Supervisor:
+                </label>
+                <input
+                  id="supervisor"
+                  type="text"
+                  name="supervisor"
+                  value={formData.supervisor}
                   onChange={handleInputChange}
                   required
                 />
@@ -289,31 +322,12 @@ function App() {
                   onChange={handleInputChange}
                 />
               </div>
-              <OfficeDropdown
-                id="office"
-                name="office"
-                value={formData.office}
-                onChange={handleInputChange}
-              />
               <ProgramAreaDropdown
                 id="program_area"
                 name="program_area"
                 value={formData.program_area}
                 onChange={handleInputChange}
               />
-              <div>
-                <label htmlFor="supervisor">
-                  <span className="required">*</span> Employee's Supervisor:
-                </label>
-                <input
-                  id="supervisor"
-                  type="text"
-                  name="supervisor"
-                  value={formData.supervisor}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
               <div>
                 <label htmlFor="paylist">
                   Employee Paylist:
@@ -326,6 +340,12 @@ function App() {
                   onChange={handleInputChange}
                 />
               </div>
+              <OfficeDropdown
+                id="office"
+                name="office"
+                value={formData.office}
+                onChange={handleInputChange}
+              />
               <div>
                 <label htmlFor="employee_email">
                   Employee Email:
@@ -339,24 +359,10 @@ function App() {
                 />
                 <p className="field-note">This email address <strong>will not</strong> receive a copy of this submission</p>
               </div>
-              <div>
-                <label htmlFor="requestor_email">
-                  <span className="required">*</span> Requestor Email:
-                </label>
-                <input
-                  id="requestor_email"
-                  type="email"
-                  name="requestor_email"
-                  value={formData.requestor_email}
-                  onChange={handleInputChange}
-                  required
-                />
-                <p className="field-note">This email address <strong>will</strong> receive a copy of this submission</p>
-              </div>
             </div>
             <br></br>
 
-            {formData.request_type === 'Information Change' && (
+            {formData.request_type && formData.request_type.includes('Information Change') && (
               <>
                 <div className="header-container">
                   <h4 style={{ color: '#555555' }}>Information Change</h4>
@@ -492,7 +498,7 @@ function App() {
               </>
             )}
 
-            {formData.request_type === 'Temporary Appointment or Acting Opportunities' && (
+            {formData.request_type && formData.request_type.includes('Temporary Appointment or Acting Opportunities') && (
               <>
                 <div className="header-container">
                   <h4 style={{ color: '#555555' }}>Temporary Appointment or Acting Opportunities</h4>
@@ -783,7 +789,7 @@ function App() {
               </>
             )}
 
-            {formData.request_type === 'Change of Hours' && (
+            {formData.request_type && formData.request_type.includes('Change of Hours') && (
               <>
                 <div className="header-container">
                   <h4 style={{ color: '#555555' }}>Change of Hours</h4>
@@ -859,7 +865,7 @@ function App() {
               </>
             )}
 
-            {formData.request_type === 'Position Movement' && (
+            {formData.request_type && formData.request_type.includes('Position Movement') && (
               <>
                 <div className="header-container">
                   <h4 style={{ color: '#555555' }}>Position Movement</h4>
@@ -970,7 +976,7 @@ function App() {
                 </div>
               </>
             )}
-            {formData.request_type === 'Leave - Departing/Returning' && (
+            {formData.request_type && formData.request_type.includes('Leave - Departing/Returning') && (
               <>
                 <div className="header-container">
                   <h4 style={{ color: '#555555' }}>Leave - Departing/Returning</h4>
@@ -1103,10 +1109,11 @@ function App() {
               </>
             )}
 
-            {(formData.request_type === 'Access Request' || 
-              (formData.request_type === 'Information Change' && formData.access_request === 'yes') ||
-              (formData.request_type === 'Leave - Departing/Returning' && formData.leave === 'no')
-              )&& (
+            {(
+              formData.request_type.includes('Access Request') ||
+              (formData.request_type.includes('Information Change') && formData.access_request === 'yes') ||
+              (formData.request_type.includes('Leave - Departing/Returning') && formData.leave === 'no')
+            ) && (
               <>
                 <div className="header-container">
                   <h4 style={{ color: '#555555' }}>Access Request</h4>
@@ -1178,12 +1185,12 @@ function App() {
                       <div>
                         <input
                           type="checkbox"
-                          id="equifax"
-                          name="equifax"
-                          checked={formData.equifax || false}
+                          id="third_party_cheques"
+                          name="third_party_cheques"
+                          checked={formData.third_party_cheques || false}
                           onChange={handleInputChange}
                         />
-                        <label htmlFor="equifax">Equifax</label>
+                        <label htmlFor="third_party_cheques">Third Party Cheques</label>
                       </div>
                       <div>
                         <input
@@ -1238,12 +1245,12 @@ function App() {
                       <div>
                         <input
                           type="checkbox"
-                          id="cra"
-                          name="cra"
-                          checked={formData.cra || false}
+                          id="CDW_OBIEE"
+                          name="CDW_OBIEE"
+                          checked={formData.CDW_OBIEE || false}
                           onChange={handleInputChange}
                         />
-                        <label htmlFor="cra">CRA</label>
+                        <label htmlFor="CDW_OBIEE">CDW/OBIEE</label>
                       </div>
                       <div>
                         <input
@@ -1420,11 +1427,11 @@ function App() {
                       <br></br>  
                     </>
                   )}
-                  {formData.equifax === true && (
+                  {formData.third_party_cheques === true && (
                     <>
                       <label>
                       <p>
-                      <strong>For all Equifax password resets</strong> and/or certificate renewals please contact the &nbsp;
+                      <strong>For all Equifax password resets</strong> and/or certificate renewals please contact the&nbsp;
                         <a 
                           href="mailto:SDSI.OPSSupport.Staffing@gov.bc.ca" 
                           style={{ color: '#4A90E2', textDecoration: 'underline' }}
@@ -1434,14 +1441,14 @@ function App() {
                       </p>
                       </label>
                       <div>
-                        <label htmlFor="equifax_request">
+                        <label htmlFor="third_party_cheques_request">
                           Equifax request details:
                         </label><br></br>
                         <input
-                          id="equifax_request"
+                          id="third_party_cheques_request"
                           type="text"
-                          name="equifax_request"
-                          value={formData.equifax_request}
+                          name="third_party_cheques_request"
+                          value={formData.third_party_cheques_request}
                           onChange={handleInputChange}
                         />
                       </div><br></br>
@@ -1616,17 +1623,18 @@ function App() {
                           value={formData.access_comments || ''}
                           onChange={handleInputChange}
                         />
-                      </div><br></br>
+                      </div>
                     </>
                   )}
+                  <p className="field-note">We are unable to mirror the access of an existing employee</p>
                 </div>
               </>
             )}
 
-            {formData.request_type === 'Transfer to Another Ministry' && (
+            {formData.request_type && formData.request_type.includes('Exits: Transfer to Another Ministry') && (
               <>
                 <div className="header-container">
-                  <h4 style={{ color: '#555555' }}>Transfer to Another Ministry</h4>
+                  <h4 style={{ color: '#555555' }}>Exits: Transfer to Another Ministry</h4>
                 </div>
                 <div className="request-change-content">
                   <div>
@@ -1698,37 +1706,15 @@ function App() {
               </>
             )}
 
-            {formData.request_type === 'Resignation, Retirement, or Termination' && (
+            {formData.request_type && formData.request_type.includes('Exits: Resignation, Retirement, or Other') && (
               <>
                 <div className="header-container">
-                  <h4 style={{ color: '#555555' }}>Resignation, Retirement, or Termination</h4>
+                  <h4 style={{ color: '#555555' }}>Exits: Resignation, Retirement, or Other</h4>
                 </div>
                 <div className="request-change-content">
-                  <p style={{ fontSize: '0.8em' }}><strong>The employee will not retain their email account or their H drive with their new ministry. All relevant documentation must be submitted by the supervisor to the PSA through a MyHR request.</strong></p>                 
+                  <p style={{ fontSize: '0.8em' }}><strong>The employee will not retain their email account or their H drive. All relevant documentation must be submitted by the supervisor to the PSA through a MyHR request.</strong></p>                 
                   <div className="radio-group">
                     <label>Reason for leaving the division:</label>
-                    <div>
-                      <input
-                        type="radio"
-                        id="leave_reason_permanent"
-                        name="leave_reason"
-                        value="permanent"
-                        checked={formData.leave_reason === 'permanent'}
-                        onChange={handleInputChange}
-                      />
-                      <label htmlFor="leave_reason_permanent">Permanent position inside the BC Public Service</label>
-                    </div>
-                    <div>
-                      <input
-                        type="radio"
-                        id="leave_reason_leaving"
-                        name="leave_reason"
-                        value="leaving"
-                        checked={formData.leave_reason === 'leaving'}
-                        onChange={handleInputChange}
-                      />
-                      <label htmlFor="leave_reason_leaving">Leaving the BC Public Service</label>
-                    </div>
                     <div>
                       <input
                         type="radio"
@@ -1763,34 +1749,7 @@ function App() {
                       <label htmlFor="leave_reason_other">Other</label>
                     </div>
                   </div>
-                  {formData.leave_reason === 'permanent' && (
-                    <>
-                      <div>
-                        <label htmlFor="leave_ministry">
-                          Ministry or division the employee is moving to:
-                        </label><br></br>
-                        <input
-                          id="leave_ministry"
-                          type="text"
-                          name="leave_ministry"
-                          value={formData.leave_ministry}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="leave_supervisor">
-                          Receiving Supervisor at new ministry/division:
-                        </label><br></br>
-                        <input
-                          id="leave_supervisor"
-                          type="text"
-                          name="leave_supervisor"
-                          value={formData.leave_supervisor}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                    </>
-                  )}<br></br>
+                  <br></br>
                   <p style={{ fontSize: '0.8em' }}>
                     <strong><span style={{ backgroundColor: 'yellow' }}>
                         Please note the last day the employee requires access to government systems. All relevant documentation must be submitted by the supervisor to the PSA through a MyHR request.
@@ -1853,6 +1812,20 @@ function App() {
                 value={formData.comments || ''}
                 onChange={handleInputChange}
               />
+            </div><br></br>
+            <div>
+              <label htmlFor="requestor_email">
+                <span className="required">*</span> Requestor Email:<br></br>
+              </label>
+              <input
+                id="requestor_email"
+                type="email"
+                name="requestor_email"
+                value={formData.requestor_email}
+                onChange={handleInputChange}
+                required
+              />
+              <p className="field-note">This email address <strong>will</strong> receive a copy of this submission</p>
             </div>
             <div>
               <label htmlFor="attachments">

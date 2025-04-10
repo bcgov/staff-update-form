@@ -161,15 +161,37 @@ textarea {
   margin-top: 5px; 
 }
 
+/*
 .checkbox-group {
-  display: flex; /* Align all checkboxes and labels in a single line */
-  flex-wrap: wrap; /* Allow wrapping to the next line if the content overflows */
-  gap: 5px; /* Add space between each checkbox and label pair */
+  display: flex; // Align all checkboxes and labels in a single line 
+  flex-wrap: wrap; // Allow wrapping to the next line if the content overflows 
+  gap: 5px; // Add space between each checkbox and label pair 
 }
 
 .checkbox-group div {
-  display: flex; /* Align each checkbox and label horizontally */
-  align-items: center; /* Vertically align the checkbox and label */
+  display: flex; // Align each checkbox and label horizontally 
+  align-items: center; // Vertically align the checkbox and label 
+}
+*/
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap; /* Wrap if necessary */
+  gap: 16px; /* Space between each checkbox group */
+}
+
+.checkbox-group > div {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 5px; /* Space between the checkbox and its label */
+}
+
+.checkbox-group label {
+  margin: 0;           /* Remove extra margin if any */
+  white-space: nowrap; /* Prevent label from breaking into a new line */
 }
 
 .date-field {
@@ -252,6 +274,5 @@ button {
 }
 
 .request-change-content {
-  background-color: #efefef;  /* light grey background */
   padding: 10px;
 }

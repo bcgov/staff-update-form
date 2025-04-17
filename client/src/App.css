@@ -276,3 +276,14 @@ button {
 .request-change-content {
   padding: 10px;
 }
+
+.print-form input,
+.print-form select,
+.print-form textarea {
+  height: 2rem !important;
+  line-height: 2rem !important;
+  padding: 0 8px !important;
+}
+.print-form .request-type-info {
+  display: none !important;
+}

@@ -2,32 +2,13 @@ import './App.css';
 import logo from './logo.png';
 import banner from './banner.png';
 import { useState } from 'react';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import ProgramAreaDropdown from './ProgramAreaDropdown';
 import paylistMapping from './programAreaPaylistMapping';
 import JobTitleDropdown from './JobTitleDropdown';
 import classificationMapping from './jobTitleClassificationMapping';
 import OfficeDropdown from './OfficeDropdown';
 import RequestTypeButtons from './RequestTypeButtons';
-
-const generatePDF = async () => {
-  // Capture the form or the specific DOM element that contains the form data.
-  const formElement = document.getElementById('form-to-pdf'); // Add an id to your form element
-
-  // Convert the element to a canvas
-  const canvas = await html2canvas(formElement);
-  const imgData = canvas.toDataURL('image/png');
-
-  // Create a new jsPDF instance
-  const pdf = new jsPDF('p', 'mm', 'a4');
-  const imgProps = pdf.getImageProperties(imgData);
-  const pdfWidth = pdf.internal.pageSize.getWidth();
-  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-  return pdf.output('datauristring'); // Returns the PDF as a data URI string
-};
+import { generatePDF } from './pdfGenerator';
 
 function App() {
   // State to capture form data
@@ -189,15 +170,15 @@ function App() {
 
   return (
     <div className="App">
-      <div className="header">
-        <img src={logo} alt="Logo" className="logo" />
-        <img src={banner} alt="Banner" className="banner" />
-        <h2 style={{ textAlign: 'left', paddingLeft: '10px', color: '#444444' }}>Staff Update Form</h2>
-      </div>
+      {!submitted ? (
+        <form id="form-to-pdf" onSubmit={handleSubmit}>
+          <div className="content">
+            <div className="header">
+              <img src={logo} alt="Logo" className="logo" />
+              <img src={banner} alt="Banner" className="banner" />
+              <h2 style={{ textAlign: 'left', paddingLeft: '10px', color: '#444444' }}>Staff Update Form</h2>
+            </div>
 
-      <div className="content">
-        {!submitted ? (
-          <form id="form-to-pdf" onSubmit={handleSubmit}>
             <div className="request-type-container">
               <label style={{ fontWeight: 'bold', fontSize: '0.9em' }}>
                 Request Type:
@@ -1855,16 +1836,21 @@ function App() {
 
             <br></br>
             <button type="submit" style={{ backgroundColor: '#2172ff', color: 'white' }}>Email</button>
-          </form>
+            
+          </div>
+        </form>
         ) : (
           <div>
+            <div className="header">
+              <img src={logo} alt="Logo" className="logo" />
+              <img src={banner} alt="Banner" className="banner" />
+              <h2 style={{ textAlign: 'left', paddingLeft: '10px', color: '#444444' }}>Staff Update Form</h2>
+            </div>
             <h2>Thank you for submitting!</h2>
-            <p>Name: {formData.name}</p>
-            <p>Email: {formData.email}</p>
+            <p>An email has been sent to the Staffing inbox, as well as: <br></br>{formData.requestor_email}</p>
             <button onClick={() => setSubmitted(false)}>Submit Another</button>
           </div>
         )}
-      </div>
     </div>
   );
 }

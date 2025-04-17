@@ -42,7 +42,6 @@ const paylistMapping = {
     "CS - Smithers": "031-2311",
     "CS - Terrace": "031-2322",
     "CS - Prince Rupert": "031-2332",
-    "CS - Provincial Profiling Team": "031-1576",
     "CS - Service BC Support Team": "031-2307",
     "CS - Change in Circumstance Team": "031-2316",
     "CS - File Review Team": "031-2317",

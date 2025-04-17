@@ -45,7 +45,6 @@ const programAreaOptions = [
     { value: 'CS - Smithers', label: 'CS - Smithers' },
     { value: 'CS - Terrace', label: 'CS - Terrace' },
     { value: 'CS - Prince Rupert', label: 'CS - Prince Rupert' },
-    { value: 'CS - Provincial Profiling Team', label: 'CS - Provincial Profiling Team' },
     { value: 'CS - Service BC Support Team', label: 'CS - Service BC Support Team' },
     { value: 'CS - Change in Circumstance Team', label: 'CS - Change in Circumstance Team' },
     { value: 'CS - File Review Team', label: 'CS - File Review Team' },
@@ -121,7 +120,6 @@ const programAreaOptions = [
     { value: 'VS - Lower Mainland  CC', label: 'VS - Lower Mainland  CC' },
     { value: 'VS - Kamloops CC', label: 'VS - Kamloops CC' },
     { value: 'VS - PG CC', label: 'VS - PG CC' },
-    { value: 'VS - After Hours', label: 'VS - After Hours' },
     { value: 'VS - Chilliwack Contact Centre', label: 'VS - Chilliwack Contact Centre' }
   ];
 

@@ -11,8 +11,7 @@ const RequestTypeButtons = ({ selected, onSelect }) => {
     "Change of Hours",
     "Position Movement",
     "Leave - Departing/Returning",
-    "Exits: Transfer to Another Ministry",
-    "Exits: Resignation, Retirement, or Other",
+    "Exits",
     "Other"
   ];
 

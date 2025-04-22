@@ -78,7 +78,7 @@ const programAreaOptions = [
     { value: 'CISB - Van East/South Richmond', label: 'CISB - Van East/South Richmond' },
     { value: 'CISB - Van North Sunshine Sea-Sky', label: 'CISB - Van North Sunshine Sea-Sky' },
     { value: 'CISB - Fraser South', label: 'CISB - Fraser South' },
-    { value: 'OSB - Finance, Contracts and Records Management', label: 'OSB - Finance, Contracts and Records Management' },
+    { value: 'OSB - Finance, Contracts and Records', label: 'OSB - Finance, Contracts and Records' },
     { value: 'OSB - Recruitment, Staffing, Facilities and Assets', label: 'OSB - Recruitment, Staffing, Facilities and Assets' },
     { value: 'OSB - Analytics and Business Intelligence', label: 'OSB - Analytics and Business Intelligence' },
     { value: 'OSB - Communications, Engagement and Organizational Health', label: 'OSB - Communications, Engagement and Organizational Health' },

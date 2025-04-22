@@ -1166,12 +1166,12 @@ function App() {
                       <div>
                         <input
                           type="checkbox"
-                          id="third_party_cheques"
-                          name="third_party_cheques"
-                          checked={formData.third_party_cheques || false}
+                          id="third_party_checks"
+                          name="third_party_checks"
+                          checked={formData.third_party_checks || false}
                           onChange={handleInputChange}
                         />
-                        <label htmlFor="third_party_cheques">Third Party Cheques</label>
+                        <label htmlFor="third_party_checks">Third Party Checks</label>
                       </div>
                       <div>
                         <input
@@ -1408,7 +1408,7 @@ function App() {
                       <br></br>  
                     </>
                   )}
-                  {formData.third_party_cheques === true && (
+                  {formData.third_party_checks === true && (
                     <>
                       <label>
                       <p>
@@ -1422,14 +1422,14 @@ function App() {
                       </p>
                       </label>
                       <div>
-                        <label htmlFor="third_party_cheques_request">
+                        <label htmlFor="third_party_checks_request">
                           Equifax request details:
                         </label><br></br>
                         <input
-                          id="third_party_cheques_request"
+                          id="third_party_checks_request"
                           type="text"
-                          name="third_party_cheques_request"
-                          value={formData.third_party_cheques_request}
+                          name="third_party_checks_request"
+                          value={formData.third_party_checks_request}
                           onChange={handleInputChange}
                         />
                       </div><br></br>
@@ -1612,90 +1612,26 @@ function App() {
               </>
             )}
 
-            {formData.request_type && formData.request_type.includes('Exits: Transfer to Another Ministry') && (
+            {formData.request_type && formData.request_type.includes('Exits') && (
               <>
                 <div className="header-container">
-                  <h4 style={{ color: '#555555' }}>Exits: Transfer to Another Ministry</h4>
-                </div>
-                <div className="request-change-content">
-                  <div>
-                    <label htmlFor="transfer_ministry">
-                      Ministry the employee is transferring to:
-                    </label><br></br>
-                    <input
-                      id="transfer_ministry"
-                      type="text"
-                      name="transfer_ministry"
-                      value={formData.transfer_ministry}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="transfer_supervisor">
-                      Receiving Supervisor at new ministry/division:
-                    </label><br></br>
-                    <input
-                      id="transfer_supervisor"
-                      type="text"
-                      name="transfer_supervisor"
-                      value={formData.transfer_supervisor}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="radio-group">
-                    <label>Is this a Temporary Appointment to another Division or Ministry?</label>
-                    <div>
-                      <input
-                        type="radio"
-                        id="ta_transfer_yes"
-                        name="ta_transfer"
-                        value="yes"
-                        checked={formData.ta_transfer === 'yes'}
-                        onChange={handleInputChange}
-                      />
-                      <label htmlFor="ta_transfer_yes">Yes</label>
-                    </div>
-                    <div>
-                      <input
-                        type="radio"
-                        id="ta_transfer_no"
-                        name="ta_transfer"
-                        value="no"
-                        checked={formData.ta_transfer === 'no'}
-                        onChange={handleInputChange}
-                      />
-                      <label htmlFor="ta_transfer_no">No</label>
-                    </div>
-                  </div>                
-                  {formData.ta_transfer === 'yes' && (
-                    <>
-                      <div className="date-field">
-                      <label htmlFor="return_date">
-                        Employee Return Date: 
-                      </label>
-                      <input
-                        type="date"
-                        id="return_date"
-                        name="return_date"
-                        value={formData.return_date || ''}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                    </>
-                  )}
-                </div>
-              </>
-            )}
-
-            {formData.request_type && formData.request_type.includes('Exits: Resignation, Retirement, or Other') && (
-              <>
-                <div className="header-container">
-                  <h4 style={{ color: '#555555' }}>Exits: Resignation, Retirement, or Other</h4>
+                  <h4 style={{ color: '#555555' }}>Exits</h4>
                 </div>
                 <div className="request-change-content">
                   <p style={{ fontSize: '0.8em' }}><strong>The employee will not retain their email account or their H drive. All relevant documentation must be submitted by the supervisor to the PSA through a MyHR request.</strong></p>                 
                   <div className="radio-group">
                     <label>Reason for leaving the division:</label>
+                    <div>
+                      <input
+                        type="radio"
+                        id="leave_reason_transfer"
+                        name="leave_reason"
+                        value="transfer"
+                        checked={formData.leave_reason === 'transfer'}
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="leave_reason_transfer">Transfer to another Ministry</label>
+                    </div>
                     <div>
                       <input
                         type="radio"
@@ -1730,6 +1666,75 @@ function App() {
                       <label htmlFor="leave_reason_other">Other</label>
                     </div>
                   </div>
+                  {formData.leave_reason === 'transfer' && (
+                    <>
+                      <div>
+                        <label htmlFor="transfer_ministry">
+                          Ministry the employee is transferring to:
+                        </label><br></br>
+                        <input
+                          id="transfer_ministry"
+                          type="text"
+                          name="transfer_ministry"
+                          value={formData.transfer_ministry}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="transfer_supervisor">
+                          Receiving Supervisor at new ministry/division:
+                        </label><br></br>
+                        <input
+                          id="transfer_supervisor"
+                          type="text"
+                          name="transfer_supervisor"
+                          value={formData.transfer_supervisor}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <div className="radio-group">
+                        <label>Is this a Temporary Appointment to another Division or Ministry?</label>
+                        <div>
+                          <input
+                            type="radio"
+                            id="ta_transfer_yes"
+                            name="ta_transfer"
+                            value="yes"
+                            checked={formData.ta_transfer === 'yes'}
+                            onChange={handleInputChange}
+                          />
+                          <label htmlFor="ta_transfer_yes">Yes</label>
+                        </div>
+                        <div>
+                          <input
+                            type="radio"
+                            id="ta_transfer_no"
+                            name="ta_transfer"
+                            value="no"
+                            checked={formData.ta_transfer === 'no'}
+                            onChange={handleInputChange}
+                          />
+                          <label htmlFor="ta_transfer_no">No</label>
+                        </div>
+                      </div>                
+                      {formData.ta_transfer === 'yes' && (
+                        <>
+                          <div className="date-field">
+                          <label htmlFor="return_date">
+                            Employee Return Date: 
+                          </label>
+                          <input
+                            type="date"
+                            id="return_date"
+                            name="return_date"
+                            value={formData.return_date || ''}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                        </>
+                      )}
+                    </>
+                  )}
                   <br></br>
                   <p style={{ fontSize: '0.8em' }}>
                     <strong><span style={{ backgroundColor: 'yellow' }}>

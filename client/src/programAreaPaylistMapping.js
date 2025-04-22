@@ -76,7 +76,7 @@ const paylistMapping = {
     "CISB - Van East/South Richmond": "031-7807",
     "CISB - Van North Sunshine Sea-Sky": "031-7808",
     "CISB - Fraser South": "031-7809",
-    "OSB - Finance, Contracts and Records Management": "031-2604",
+    "OSB - Finance, Contracts and Records": "031-2604",
     "OSB - Recruitment, Staffing, Facilities and Assets": "031-2605",
     "OSB - Analytics and Business Intelligence": "031-2614",
     "OSB - Communications, Engagement and Organizational Health": "031-2615",

@@ -12,7 +12,7 @@ const RequestTypeButtons = ({ selected, onSelect }) => {
     "Position Movement",
     "Leave - Departing/Returning",
     "Exits",
-    "Other"
+    "Other Requests"
   ];
 
   const getTooltipText = (type) => {

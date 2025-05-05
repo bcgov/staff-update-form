@@ -180,11 +180,12 @@ function App() {
       const attachmentsPayload = await Promise.all(filePromises);
 
       // 3) POST them
-      const res = await fetch('http://localhost:3001/send-pdf', {
-        method:  'POST',
+      const API = process.env.REACT_APP_MAIL_SERVER_URL; 
+      await fetch(`${API}/send-pdf`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email:        'sinan.soykut@gov.bc.ca',
+          email: 'sinan.soykut@gov.bc.ca',
           pdfBase64,
           firstname:    formData.firstname,
           lastname:     formData.lastname,

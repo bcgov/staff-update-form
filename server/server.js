@@ -29,15 +29,10 @@ app.post('/send-pdf', async (req, res) => {
       attachments
     } = req.body;
 
-    if (!email) {
-      return res.status(400).json({ error: 'an email is required' });
-    }
-    if (!pdfBase64) {
-      return res.status(400).json({ error: 'a pdf is required' });
-    }
-    if (!firstname || !lastname || !employeeID || !date) {
-      return res.status(400).json({ error: 'firstname, lastname, employeeID and date are required' });
-    }
+    // minimal validation
+    if (!email)                           return res.status(400).json({ error: 'email is required' });
+    if (!pdfBase64)                       return res.status(400).json({ error: 'pdfBase64 is required' });
+    if (!firstname || !lastname)          return res.status(400).json({ error: 'firstname & lastname are required' });
 
     console.log('incoming attachments:', req.body.attachments);
 
@@ -88,4 +83,5 @@ Staffing Team`,
   }
 });
 
-app.listen(3001, () => console.log('Listening on http://localhost:3001'))
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

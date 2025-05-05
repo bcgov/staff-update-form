@@ -9,7 +9,7 @@ export async function generatePDF() {
   }
 
   const canvas = await html2canvas(formElement, {
-    scale: window.devicePixelRatio || 2,
+    scale: 1,
     useCORS: true,
     letterRendering: true,
     onclone: (clonedDoc) => {
@@ -49,12 +49,13 @@ export async function generatePDF() {
   })
 
   // now you have a canvas that shows the entire, expanded form
-  const imgData = canvas.toDataURL('image/png')
+  const imgData = canvas.toDataURL('image/jpeg', 0.7);
   const pdf     = new jsPDF({
     unit:  'px',
     format: [ canvas.width, canvas.height ]
   })
 
-  pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height)
-  pdf.save('form.pdf')
+  pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height)
+  //pdf.save('form.pdf')
+  return pdf.output('datauristring');
 }

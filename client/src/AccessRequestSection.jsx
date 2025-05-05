@@ -447,7 +447,7 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
                     onChange={handleInputChange}
                 />
                 <div>
-                    <label htmlFor="new_hire_position">Position:</label>
+                    <label htmlFor="new_hire_position">Position:</label><br></br>
                     <input
                     id="new_hire_position"
                     type="text"

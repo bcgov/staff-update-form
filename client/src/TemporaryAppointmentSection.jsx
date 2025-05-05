@@ -41,7 +41,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
             <div>
               <label htmlFor="transfer_ministry">
                 The Division or Ministry the employee is transferring to:
-              </label>
+              </label><br></br>
               <input
                 id="transfer_ministry"
                 type="text"
@@ -53,7 +53,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
             <div>
               <label htmlFor="transfer_supervisor">
                 Who will their direct report be? (supervisor/manager)
-              </label>
+              </label><br></br>
               <input
                 id="transfer_supervisor"
                 type="text"
@@ -116,7 +116,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
             )}
 
             <div>
-              <label htmlFor="acting_title">Acting Title:</label>
+              <label htmlFor="acting_title">Acting Title:</label><br></br>
               <input
                 id="acting_title"
                 type="text"
@@ -126,7 +126,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
               />
             </div>
             <div>
-              <label htmlFor="position_incumbent">Position Incumbent:</label>
+              <label htmlFor="position_incumbent">Position Incumbent:</label><br></br>
               <input
                 id="position_incumbent"
                 type="text"
@@ -136,7 +136,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
               />
             </div>
             <div>
-              <label htmlFor="staffing_request_num">Staffing Request Number:</label>
+              <label htmlFor="staffing_request_num">Staffing Request Number:</label><br></br>
               <input
                 id="staffing_request_num"
                 type="number"
@@ -146,7 +146,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
               />
             </div>
             <div>
-              <label htmlFor="position_number_TA">Position Number for TA:</label>
+              <label htmlFor="position_number_TA">Position Number for TA:</label><br></br>
               <input
                 id="position_number_TA"
                 type="number"
@@ -156,7 +156,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
               />
             </div>
             <div>
-              <label htmlFor="position_number_SR">Position Number from staffing request:</label>
+              <label htmlFor="position_number_SR">Position Number from staffing request:</label><br></br>
               <input
                 id="position_number_SR"
                 type="number"
@@ -166,7 +166,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
               />
             </div>
             <div>
-              <label htmlFor="position_supervisor">Position Supervisor:</label>
+              <label htmlFor="position_supervisor">Position Supervisor:</label><br></br>
               <input
                 id="position_supervisor"
                 type="text"
@@ -184,7 +184,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
             />
 
             <div>
-              <label htmlFor="ta_paylist">Employee Paylist:</label>
+              <label htmlFor="ta_paylist">Employee Paylist:</label><br></br>
               <input
                 id="ta_paylist"
                 type="text"

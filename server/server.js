@@ -1,53 +1,91 @@
 // server.js
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const nodemailer = require('nodemailer');
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import nodemailer from 'nodemailer';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+app.use(cors());                         // ← allow all origins (or configure as needed)
+app.use(bodyParser.json({ limit: '20mb' }));
 
-app.use(cors());
-app.use(express.json({ limit: '20mb' })); // allow big PDF payloads
-
-// configure your SMTP transporter via env vars
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
+let transporter = nodemailer.createTransport({
+  host: 'apps.smtp.gov.bc.ca',
+  port: 25,
+  secure: false,
+  ignoreTLS: true,
+  tls: { rejectUnauthorized: false },
 });
 
 app.post('/send-pdf', async (req, res) => {
   try {
-    const { pdfData, email } = req.body;
-    // pdfData is a data URI: "data:image/png;base64,XXXX..."
-    const base64 = pdfData.split(',')[1];
-    const buffer = Buffer.from(base64, 'base64');
+    const {
+      email,
+      pdfBase64,
+      firstname,
+      lastname,
+      employeeID,
+      ccMail,
+      date,
+      attachments
+    } = req.body;
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,    // e.g. '"Staff‐PDF" <no-reply@yourdomain.ca>'
-      to: email,                       // recipient from client
-      subject: 'Your Staff Update PDF',
-      text: 'Please find attached your PDF.',
-      attachments: [
-        {
-          filename: 'staff-update.pdf',
-          content: buffer,
-        }
-      ]
+    if (!email) {
+      return res.status(400).json({ error: 'an email is required' });
+    }
+    if (!pdfBase64) {
+      return res.status(400).json({ error: 'a pdf is required' });
+    }
+    if (!firstname || !lastname || !employeeID || !date) {
+      return res.status(400).json({ error: 'firstname, lastname, employeeID and date are required' });
+    }
+
+    console.log('incoming attachments:', req.body.attachments);
+
+    // decode the Base64 PDF
+    const pdfBuffer = Buffer.from(pdfBase64, 'base64');
+
+    // Decode each extra attachment
+    const extraAttachments = (attachments || []).map(att => ({
+      filename:    att.filename,
+      content:     Buffer.from(att.content, 'base64'),
+      contentType: att.contentType
+    }));
+
+    // Build the array for nodemailer
+    const mailAttachments = [
+      {
+        filename:    'form.pdf',
+        content:     pdfBuffer,
+        contentType: 'application/pdf'
+      },
+      ...extraAttachments
+    ];
+
+    // build  subject line
+    const subject = `${lastname}, ${firstname}, (${employeeID}) – Staff Update Form ${date}`;
+
+    // send the email
+    let info = await transporter.sendMail({
+      from:    '"Staff Update Form" <sdsi.opssupport.staffing@gov.bc.ca>',
+      to:      email,
+      cc:      ccMail,
+      subject: subject,
+      text: `Hello,
+
+Thank you for submitting a Staff Update Form. A staffing team member will process your request as soon as possible.
+
+Kind regards,
+
+Staffing Team`,
+      attachments: mailAttachments
     });
 
-    res.json({ success: true });
+    console.log('Queued PDF‑mail as', info.messageId);
+    res.json({ ok: true, messageId: info.messageId });
   } catch (err) {
-    console.error('send-pdf error:', err);
+    console.error('send‑pdf error:', err);
     res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Email server listening on http://localhost:${PORT}`);
-});
+app.listen(3001, () => console.log('Listening on http://localhost:3001'))

@@ -27,7 +27,7 @@ export default function ChangeOfHoursSection({ formData, onChange }) {
         <div>
           <label htmlFor="total_hours">
             How many total hours will the staff be working every 2 weeks:
-          </label>
+          </label><br></br>
           <input
             style={{ marginTop: 4 }}
             id="total_hours"

@@ -1,7 +1,7 @@
 import './App.css';
 import logo from './logo.png';
 import banner from './banner.png';
-import { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { generatePDF } from './pdfGenerator';
 import paylistMapping from './programAreaPaylistMapping';
 import classificationMapping from './jobTitleClassificationMapping';
@@ -17,15 +17,19 @@ import AccessRequestSection from './AccessRequestSection';
 import ExitsSection from './ExitsSection';
 
 function App() {
-  // State to capture form data
-  const [formData, setFormData] = useState({   
-    request_type: [],
-    name: '',
-    email: '',
-    comments: "Please do not include unnecessary private information in the comments",
-    attachments: []
-  });
 
+  const initialFormData = {
+    request_type: [],
+    firstname: '',
+    lastname: '',
+    employee_id: '',
+    todays_date: '',
+    requestor_email: '',
+    comments: 'Please do not include unnecessary private information in the comments',
+  };
+  
+  const formRef = useRef(null)
+  const [formData, setFormData] = useState(initialFormData);
   const [attachments, setAttachments] = useState([]);
   const [submitted, setSubmitted] = useState(false);
 
@@ -119,20 +123,23 @@ function App() {
   };
 
   // handle form attachments
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files); // Convert FileList to an array
-    setFormData((prevData) => ({
-      ...prevData,
-      attachments: files
-    }));
+  const handleFileChange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setAttachments(prev => {
+      // replace the 0th slot (or push if none)
+      const next = [...prev];
+      next[0] = file;
+      return next;
+    });
   };
 
   const handleAddAttachment = (e, index) => {
-    const files = Array.from(e.target.files);
-    setAttachments((prevAttachments) => {
-      const updatedAttachments = [...prevAttachments];
-      updatedAttachments[index] = files[0]; // Replace or add the file at the specific index
-      return updatedAttachments;
+    const file = e.target.files[0];
+    setAttachments(prev => {
+      const next = [...prev];
+      next[index] = file;
+      return next;
     });
   };
 
@@ -141,43 +148,70 @@ function App() {
   };
 
   // handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload
-    setSubmitted(true);
-    console.log('Form submitted:', formData);
-  
+  const handleSubmit = async e => {
+    e.preventDefault()
+
     try {
-      // Generate the PDF
-      const pdfDataUri = await generatePDF();
-  
-      // Define the email recipient (you can hard-code this or get it from your form)
-      const recipientEmail = 'recipient@example.com';
-  
-      // Send the PDF to your backend API
-      const response = await fetch('https://your-backend-endpoint/send-pdf', {
-        method: 'POST',
+      // 0) collect the user‐picked File[] attachments
+      const files = attachments.filter(Boolean); // drop any null placeholders
+
+      // 1) PDF first
+      const dataUri    = await generatePDF();
+      const pdfBase64  = dataUri.split(',')[1];
+
+      // 2) now turn each File into { filename, content: base64, contentType }
+      const filePromises = files.map(
+        file =>
+          new Promise((res, rej) => {
+            const reader = new FileReader();
+            reader.onerror = rej;
+            reader.onload  = () => {
+              // reader.result is "data:<mime>;base64,AAAA..."
+              const [meta, base64] = reader.result.split(',');
+              res({
+                filename:    file.name,
+                content:     base64,
+                contentType: file.type
+              });
+            };
+            reader.readAsDataURL(file);
+          })
+      );
+      const attachmentsPayload = await Promise.all(filePromises);
+
+      // 3) POST them
+      const res = await fetch('http://localhost:3001/send-pdf', {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          pdfData: pdfDataUri,
-          email: recipientEmail,
-        }),
+          email:        'sinan.soykut@gov.bc.ca',
+          pdfBase64,
+          firstname:    formData.firstname,
+          lastname:     formData.lastname,
+          employeeID:   formData.employee_id,
+          ccMail:       formData.requestor_email,
+          date:         formData.todays_date,
+          attachments:  attachmentsPayload
+        })
       });
-  
-      if (response.ok) {
-        console.log('Email sent successfully!');
-      } else {
-        console.error('Error sending email');
-      }
-    } catch (error) {
-      console.error('Error generating PDF or sending email:', error);
+
+      // 3) show success and reset
+      window.alert('Message sent!');
+
+      // reset all form fields, clear out your attachments array
+      setFormData(initialFormData);
+      setAttachments([]);
+      formRef.current?.reset() // reset the form element
+    } catch (err) {
+      console.error(err);
+      window.alert(`Error: ${err.message}`);
     }
-  };
-  
+  }
 
   return (
     <div className="App">
       {!submitted ? (
-        <form id="form-to-pdf" onSubmit={handleSubmit}>
+        <form ref={formRef} id="form-to-pdf" onSubmit={handleSubmit}>
           <div className="content">
             <div className="header">
               <img src={logo} alt="Logo" className="logo" />

@@ -17,7 +17,7 @@ import AccessRequestSection from './AccessRequestSection';
 import ExitsSection from './ExitsSection';
 
 function App() {
-
+  
   const initialFormData = {
     request_type: [],
     firstname: '',

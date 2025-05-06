@@ -179,6 +179,8 @@ function App() {
       );
       const attachmentsPayload = await Promise.all(filePromises);
 
+      console.log(process.env.REACT_APP_MAIL_SERVER_URL)
+
       // 3) POST them
       const API = process.env.REACT_APP_MAIL_SERVER_URL; 
       await fetch(`${API}/send-pdf`, {

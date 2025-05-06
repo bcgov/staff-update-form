@@ -34,8 +34,6 @@ app.post('/send-pdf', async (req, res) => {
     if (!pdfBase64)                       return res.status(400).json({ error: 'pdfBase64 is required' });
     if (!firstname || !lastname)          return res.status(400).json({ error: 'firstname & lastname are required' });
 
-    console.log('incoming attachments:', req.body.attachments);
-
     // decode the Base64 PDF
     const pdfBuffer = Buffer.from(pdfBase64, 'base64');
 
@@ -83,5 +81,4 @@ Staffing Team`,
   }
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+app.listen(3001, () => console.log(`Listening on port 3001`));

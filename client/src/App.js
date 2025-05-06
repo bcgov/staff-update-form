@@ -179,10 +179,10 @@ function App() {
       );
       const attachmentsPayload = await Promise.all(filePromises);
 
-      console.log(process.env.REACT_APP_MAIL_SERVER_URL)
-
       // 3) POST them
-      const API = process.env.REACT_APP_MAIL_SERVER_URL; 
+      //const API = process.env.REACT_APP_MAIL_SERVER_URL; 
+      const API = 'https://staff-update-form-server-bcd07f-dev.apps.silver.devops.gov.bc.ca'; 
+      console.log(API)
       await fetch(`${API}/send-pdf`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -180,8 +180,8 @@ function App() {
       const attachmentsPayload = await Promise.all(filePromises);
 
       // 3) POST them
-      //const API = process.env.REACT_APP_MAIL_SERVER_URL; 
-      const API = 'https://staff-update-form-server-bcd07f-dev.apps.silver.devops.gov.bc.ca'; 
+      const API = process.env.REACT_APP_MAIL_SERVER_URL; 
+      //const API = 'https://staff-update-form-server-bcd07f-dev.apps.silver.devops.gov.bc.ca'; 
       console.log(API)
       await fetch(`${API}/send-pdf`, {
         method: 'POST',

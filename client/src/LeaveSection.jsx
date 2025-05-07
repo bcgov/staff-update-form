@@ -59,7 +59,7 @@ const LeaveSection = ({ formData, handleInputChange }) => {
               />
             </div>
             <div className="radio-group">
-              <label>Do you have an active EITR?</label>
+              <label>Does the employee have an existing Employee Initiated Transfer Request (EITR)?</label>
               <div>
                 <input
                   type="radio"

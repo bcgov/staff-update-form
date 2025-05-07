@@ -55,7 +55,7 @@ app.post('/send-pdf', async (req, res) => {
     ];
 
     // build  subject line
-    const subject = `${lastname}, ${firstname}, (${employeeID}) – Staff Update Form ${date}`;
+    const subject = `TESTING - ${lastname}, ${firstname}, (${employeeID}) – Staff Update Form ${date}`;
 
     // send the email
     let info = await transporter.sendMail({

@@ -2,10 +2,9 @@
 import './App.css';
 import logo from './logo.png';
 import banner from './banner.png';
-import React, { useState, useRef } from 'react';
-import { ReactKeycloakProvider } from '@react-keycloak/web';
+import React, { useState, useRef, useEffect } from 'react';
 import { generatePDF } from './pdfGenerator';
-import keycloak from './keycloak'; // Import the Keycloak instance
+import { getKeycloak } from './keycloak'; // Import the simplified getKeycloak function
 // import mappings
 import paylistMapping from './programAreaPaylistMapping';
 import classificationMapping from './jobTitleClassificationMapping';
@@ -20,7 +19,6 @@ import LeaveSection from './LeaveSection';
 import AccessRequestSection from './AccessRequestSection';
 import ExitsSection from './ExitsSection';
 
-//function AppContent() {
 function App() {
   const initialFormData = {
     request_type: [],
@@ -36,6 +34,28 @@ function App() {
   const [formData, setFormData] = useState(initialFormData);
   const [attachments, setAttachments] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+
+  const [initialized, setInitialized] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    getKeycloak()
+      .then((keycloak) => {
+        setInitialized(true);
+        setAuthenticated(keycloak.authenticated);
+      })
+      .catch((err) => {
+        console.error('Keycloak initialization failed:', err);
+      });
+  }, []);
+
+  if (!initialized) {
+    return <div>Loading...</div>;
+  }
+
+  if (!authenticated) {
+    return <div>Authentication required. Redirecting...</div>;
+  }
 
   // handle input changes
   const handleInputChange = (e) => {
@@ -432,13 +452,4 @@ function App() {
   );
 }
 
-/*
-function App() {
-  return (
-    <ReactKeycloakProvider authClient={keycloak}>
-      <AppContent />
-    </ReactKeycloakProvider>
-  );
-}
-*/
 export default App;

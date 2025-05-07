@@ -1,12 +1,16 @@
+// import libraries
 import './App.css';
 import logo from './logo.png';
 import banner from './banner.png';
 import React, { useState, useRef } from 'react';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { generatePDF } from './pdfGenerator';
+import keycloak from './keycloak'; // Import the Keycloak instance
+// import mappings
 import paylistMapping from './programAreaPaylistMapping';
 import classificationMapping from './jobTitleClassificationMapping';
 import RequestTypeButtons from './RequestTypeButtons';
-
+// import sections
 import CurrentInformationSection from './CurrentInformationSection';
 import InformationChangeSection from './InformationChangeSection';
 import TemporaryAppointmentSection from './TemporaryAppointmentSection';
@@ -16,8 +20,8 @@ import LeaveSection from './LeaveSection';
 import AccessRequestSection from './AccessRequestSection';
 import ExitsSection from './ExitsSection';
 
+//function AppContent() {
 function App() {
-  
   const initialFormData = {
     request_type: [],
     firstname: '',
@@ -180,14 +184,13 @@ function App() {
       const attachmentsPayload = await Promise.all(filePromises);
 
       // 3) POST them
-      const API = process.env.REACT_APP_MAIL_SERVER_URL; 
-      //const API = 'https://staff-update-form-server-bcd07f-dev.apps.silver.devops.gov.bc.ca'; 
+      const API = process.env.REACT_APP_MAIL_SERVER_URL;
       console.log(API)
       await fetch(`${API}/send-pdf`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: 'sinan.soykut@gov.bc.ca',
+          email: 'sdsi.opssupport.staffing@gov.bc.ca',
           pdfBase64,
           firstname:    formData.firstname,
           lastname:     formData.lastname,
@@ -429,4 +432,13 @@ function App() {
   );
 }
 
+/*
+function App() {
+  return (
+    <ReactKeycloakProvider authClient={keycloak}>
+      <AppContent />
+    </ReactKeycloakProvider>
+  );
+}
+*/
 export default App;

@@ -269,6 +269,15 @@ function App() {
                 </div>
               )
             )}      
+            <br></br>
+            
+            {formData.request_type && formData.request_type.length > 0 && (
+              <div className="request-type-info">
+                <p style={{ fontSize: '0.8em' }}>
+                <b>Collection Notice:</b> We are collecting your personal information for the purpose of obtaining the approvals for access to SDPR HR Data under section 26(c) of the Freedom of Information and Protection of Privacy Act. If you have any questions, please contact WIRTeam@gov.bc.ca.
+                </p>
+              </div>
+            )}     
 
             {/* display current information section */}
             <CurrentInformationSection

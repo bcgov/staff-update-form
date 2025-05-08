@@ -5,6 +5,7 @@ let keycloakInstance;
 export async function getKeycloak() {
   if (!keycloakInstance) {
     keycloakInstance = new Keycloak({
+      //url: 'https://dev.loginproxy.gov.bc.ca/auth',
       url:      process.env.REACT_APP_KEYCLOAK_URL,
       realm:    'standard',
       clientId: 'staff-update-form-6031'

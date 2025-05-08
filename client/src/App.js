@@ -210,7 +210,7 @@ function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: 'sdsi.opssupport.staffing@gov.bc.ca',
+          email:        process.REACT_APP_STAFFING_EMAIL,
           pdfBase64,
           firstname:    formData.firstname,
           lastname:     formData.lastname,

@@ -217,6 +217,10 @@ function App() {
       );
       const attachmentsPayload = await Promise.all(filePromises);
 
+      // Separate facilities and finance emails for BCC
+      const facilitiesEmail = process.env.REACT_APP_FACILITIES_EMAIL;
+      const financeEmail = process.env.REACT_APP_FINANCE_EMAIL;
+
       // 3) POST them
       const API = process.env.REACT_APP_MAIL_SERVER_URL;
       await fetch(`${API}/send-pdf`, {
@@ -231,7 +235,8 @@ function App() {
           firstname:    formData.firstname,
           lastname:     formData.lastname,
           employeeID:   formData.employee_id,
-          ccMail:       `${process.env.REACT_APP_FINANCE_EMAIL}; ${process.env.REACT_APP_FACILITIES_EMAIL}; ${formData.requestor_email}`,
+          ccMail:       formData.requestor_email, 
+          bccMail:      `${facilitiesEmail}; ${financeEmail}`, // Add facilities and finance emails to BCC
           date:         formData.todays_date,
           attachments:  attachmentsPayload
         })

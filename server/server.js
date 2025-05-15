@@ -64,6 +64,7 @@ app.post('/send-pdf', validateToken, async (req, res) => {
       lastname,
       employeeID,
       ccMail,
+      bccMail,
       date,
       attachments
     } = req.body;
@@ -101,6 +102,7 @@ app.post('/send-pdf', validateToken, async (req, res) => {
       from:    '"Staff Update Form" <sdsi.opssupport.staffing@gov.bc.ca>',
       to:      email,
       cc:      ccMail,
+      bcc:     bccMail,
       subject: subject,
       text: `Hello,
 

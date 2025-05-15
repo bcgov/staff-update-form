@@ -20,12 +20,13 @@ import AccessRequestSection from './AccessRequestSection';
 import ExitsSection from './ExitsSection';
 
 function App() {
+  const today = new Date().toISOString().split('T')[0];
   const initialFormData = {
     request_type: [],
     firstname: '',
     lastname: '',
     employee_id: '',
-    todays_date: '',
+    todays_date: today,
     requestor_email: '',
     comments: 'Please do not include unnecessary private information in the comments',
   };

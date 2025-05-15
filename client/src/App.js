@@ -4,7 +4,7 @@ import logo from './logo.png';
 import banner from './banner.png';
 import React, { useState, useRef, useEffect } from 'react';
 import { generatePDF } from './pdfGenerator';
-import { getKeycloak } from './keycloak'; // Import the simplified getKeycloak function
+import { getKeycloak, getUserEmail } from './keycloak'; // Import the simplified getKeycloak function
 // import mappings
 import paylistMapping from './programAreaPaylistMapping';
 import classificationMapping from './jobTitleClassificationMapping';
@@ -44,6 +44,15 @@ function App() {
       .then((keycloak) => {
         setInitialized(true);
         setAuthenticated(keycloak.authenticated);
+
+        // Set the email of the logged-in user
+        const user_email = getUserEmail();
+        if (user_email) {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            requestor_email: user_email,
+          }));
+        }
       })
       .catch((err) => {
         console.error('Keycloak initialization failed:', err);
@@ -400,20 +409,6 @@ function App() {
                 onChange={handleInputChange}
               />
             </div><br></br>
-            <div>
-              <label htmlFor="requestor_email">
-                <span className="required">*</span> Requestor Email:<br></br>
-              </label>
-              <input
-                id="requestor_email"
-                type="email"
-                name="requestor_email"
-                value={formData.requestor_email}
-                onChange={handleInputChange}
-                required
-              />
-              <p className="field-note">This email address <strong>will</strong> receive a copy of this submission</p>
-            </div>
             <div>
               <label htmlFor="attachments">
                 Attachments:

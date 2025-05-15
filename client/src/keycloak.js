@@ -20,3 +20,10 @@ export async function getKeycloak() {
   }
   return keycloakInstance;
 }
+
+export function getUserEmail() {
+  if (keycloakInstance && keycloakInstance.tokenParsed) {
+    return keycloakInstance.tokenParsed.email;
+  }
+  return null;
+}

@@ -18,7 +18,7 @@ let transporter = nodemailer.createTransport({
 
 // Configure the JWKS client
 const client = jwksClient({
-  jwksUri: 'https://loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/certs',
+  jwksUri: process.env.JWKS_URL,
 });
 
 // Function to get the signing key

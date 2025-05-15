@@ -205,8 +205,6 @@ function App() {
 
       // 3) POST them
       const API = process.env.REACT_APP_MAIL_SERVER_URL;
-      console.log(API)
-      console.log(process.env.REACT_APP_STAFFING_EMAIL)
       await fetch(`${API}/send-pdf`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -216,7 +214,7 @@ function App() {
           firstname:    formData.firstname,
           lastname:     formData.lastname,
           employeeID:   formData.employee_id,
-          ccMail:       formData.requestor_email,
+          ccMail:       `${process.env.REACT_APP_FINANCE_EMAIL}; ${process.env.REACT_APP_FACILITIES_EMAIL}; ${formData.requestor_email}`,
           date:         formData.todays_date,
           attachments:  attachmentsPayload
         })

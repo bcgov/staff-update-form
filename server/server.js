@@ -55,7 +55,7 @@ app.post('/send-pdf', async (req, res) => {
     ];
 
     // build  subject line
-    const environment = process.env.ENVIRONMENT;
+    const environment = process.env.REACT_APP_ENVIRONMENT;
     const subject = `${lastname}, ${firstname}, (${employeeID}) – Staff Update Form ${date} ${environment}`;
 
     // send the email

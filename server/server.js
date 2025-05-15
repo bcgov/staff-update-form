@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
+import jwt from 'jsonwebtoken';
+import jwksClient from 'jwks-rsa'; // Add this to fetch the public key dynamically
 
 const app = express();
 app.use(cors());                         // ← allow all origins (or configure as needed)
@@ -14,7 +16,46 @@ let transporter = nodemailer.createTransport({
   secure: false,
 });
 
-app.post('/send-pdf', async (req, res) => {
+// Configure the JWKS client
+const client = jwksClient({
+  jwksUri: 'https://loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/certs',
+});
+
+// Function to get the signing key
+const getKey = (header, callback) => {
+  client.getSigningKey(header.kid, (err, key) => {
+    if (err) {
+      callback(err);
+    } else {
+      const signingKey = key.getPublicKey();
+      callback(null, signingKey);
+    }
+  });
+};
+
+// Middleware to validate Keycloak token
+const validateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Authorization header is missing' });
+  }
+
+  const token = authHeader.split(' ')[1]; // Extract the token from the header
+  if (!token) {
+    return res.status(401).json({ error: 'Token is missing' });
+  }
+
+  jwt.verify(token, getKey, { algorithms: ['RS256'] }, (err, decoded) => {
+    if (err) {
+      console.error('Token validation error:', err);
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+    req.user = decoded; // Attach the decoded token to the request object
+    next();
+  });
+};
+
+app.post('/send-pdf', validateToken, async (req, res) => {
   try {
     const {
       email,

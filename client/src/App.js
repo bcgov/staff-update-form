@@ -38,6 +38,7 @@ function App() {
 
   const [initialized, setInitialized] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [token, setToken] = useState(null); // State to store the token
 
   useEffect(() => {
     getKeycloak()
@@ -53,6 +54,9 @@ function App() {
             requestor_email: user_email,
           }));
         }
+
+        // Store the token
+        setToken(keycloak.token);
       })
       .catch((err) => {
         console.error('Keycloak initialization failed:', err);
@@ -217,7 +221,10 @@ function App() {
       const API = process.env.REACT_APP_MAIL_SERVER_URL;
       await fetch(`${API}/send-pdf`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Use the token from state
+        },
         body: JSON.stringify({
           email:        process.env.REACT_APP_STAFFING_EMAIL,
           pdfBase64,

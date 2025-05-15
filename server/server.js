@@ -12,8 +12,6 @@ let transporter = nodemailer.createTransport({
   host: 'apps.smtp.gov.bc.ca',
   port: 25,
   secure: false,
-  ignoreTLS: true,
-  tls: { rejectUnauthorized: false },
 });
 
 app.post('/send-pdf', async (req, res) => {

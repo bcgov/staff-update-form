@@ -26,6 +26,7 @@ function App() {
     firstname: '',
     lastname: '',
     employee_id: '',
+    start_date: today,
     todays_date: today,
     requestor_email: '',
     comments: 'Please do not include unnecessary private information in the comments',
@@ -162,10 +163,9 @@ function App() {
 
   // handle form attachments
   const handleFileChange = e => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const file = e.target.files[0]; // get the attached file
+    if (!file) return; // if no file selected, do nothing
     setAttachments(prev => {
-      // replace the 0th slot (or push if none)
       const next = [...prev];
       next[0] = file;
       return next;
@@ -421,31 +421,21 @@ function App() {
                 onChange={handleInputChange}
               />
             </div><br></br>
+
             <div>
-              <label htmlFor="attachments">
-                Attachments:
-              </label><br></br>
-              <input
-                type="file"
-                id="attachments"
-                name="attachments"
-                onChange={handleFileChange}
-              />
-              </div><p></p>
-            <div>
-              {attachments.map((attachment, index) => (
-                <div key={index} style={{ marginBottom: '10px' }}>
-                  <input
-                    type="file"
-                    onChange={(e) => handleAddAttachment(e, index)}
-                  />
-                </div>
-              ))}
-              <p className="field-note">You can upload pdf's, documents, or other files</p>            
               <button type="button" onClick={addNewAttachmentField}>
-                Add Another Attachment
+                Attach a file
               </button>
+              <p className="field-note">You can upload pdf's, documents, or other files</p>            
             </div>
+            {attachments.map((attachment, index) => (
+              <div key={index} style={{ marginBottom: '10px' }}>
+                <input
+                  type="file"
+                  onChange={(e) => handleAddAttachment(e, index)}
+                />
+              </div>
+            ))}
 
             <br></br>
             <button type="submit" style={{ backgroundColor: '#2172ff', color: 'white' }}>Email</button>

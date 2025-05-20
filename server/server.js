@@ -10,10 +10,22 @@ const app = express();
 app.use(cors());                         // ← allow all origins (or configure as needed)
 app.use(bodyParser.json({ limit: '20mb' }));
 
+// Update Nodemailer transport configuration to enable debugging
 let transporter = nodemailer.createTransport({
   host: 'apps.smtp.gov.bc.ca',
   port: 25,
   secure: false,
+  debug: true, // Enable debug logs for SMTP communication
+});
+
+// Add event listener for debugging SMTP communication
+transporter.on('log', (info) => {
+  console.log('Nodemailer log:', info);
+});
+
+// Add an error event listener to capture SMTP errors
+transporter.on('error', (err) => {
+  console.error('Nodemailer error:', err);
 });
 
 // Configure the JWKS client

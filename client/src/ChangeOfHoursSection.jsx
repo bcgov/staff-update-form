@@ -9,7 +9,7 @@ export default function ChangeOfHoursSection({ formData, onChange }) {
       <div className="request-change-content">
         <p style={{ fontSize: '0.8em' }}>
           <strong>
-            It is the supervisor's responsibility to update their staff's Time &amp; Leave and contact Scheduling and Workload Management to update Teleopti schedule. (SDSI.OPS.Support.Scheduling.and.Workload.Management@gov.bc.ca)
+            It is the supervisor's responsibility to update their staff's Time &amp; Leave and contact Scheduling and Workload Management to update Teleopti schedule if required. (SDSI.OPS.Support.Scheduling.and.Workload.Management@gov.bc.ca)
           </strong>
         </p>
 

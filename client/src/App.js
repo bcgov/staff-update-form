@@ -29,6 +29,7 @@ function App() {
     start_date: today,
     todays_date: today,
     requestor_email: '',
+    leave_comment: 'Please do not include unnecessary private information in the comments',
     comments: 'Please do not include unnecessary private information in the comments',
   };
   

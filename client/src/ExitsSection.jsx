@@ -13,6 +13,17 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
             <div>
                 <input
                 type="radio"
+                id="leave_reason_permanent"
+                name="leave_reason"
+                value="permanent"
+                checked={formData.leave_reason === 'permanent'}
+                onChange={handleInputChange}
+                />
+                <label htmlFor="leave_reason_permanent">Permanent Position</label>
+            </div>
+            <div>
+                <input
+                type="radio"
                 id="leave_reason_retire"
                 name="leave_reason"
                 value="retire"

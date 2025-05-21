@@ -69,7 +69,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
           <>
             <p style={{ fontSize: '0.8em' }}>
               <strong>
-                Please note that Time & Leave access is only provided for TA/acting terms longer than 20 days.
+                Please note that Time & Leave access is only provided for TA/acting terms 21 working days or longer.
               </strong>
             </p>
             <div className="radio-group">

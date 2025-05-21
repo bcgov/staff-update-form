@@ -41,7 +41,7 @@ const CurrentInformationSection = ({ formData, onChange }) => {
         </div>
         <div>
           <label htmlFor="employee_id">
-            <span className="required">*</span> Employee ID Number:
+            <span className="required">*</span> Employee ID:
           </label>
           <input
             id="employee_id"

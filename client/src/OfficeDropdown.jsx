@@ -4,7 +4,6 @@ const officeOptions = [
   { value: '', label: 'Please Select:' },
   { value: '055 Victoria Contact Center', label: '055 Victoria Contact Center' },
   { value: '070 Health and Specialized Services', label: '070 Health and Specialized Services' },
-  { value: '100 Nanaimo', label: '100 Nanaimo' },
   { value: '100 Victoria Regional', label: '100 Victoria Regional' },
   { value: '106 Vefra Victoria', label: '106 Vefra Victoria' },
   { value: '107 Gateway Victoria', label: '107 Gateway Victoria' },

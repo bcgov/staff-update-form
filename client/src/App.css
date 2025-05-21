@@ -288,7 +288,7 @@ button {
   display: none !important;
 }
 
-// Hide the default spinner in number inputs
+/* Hide the default spinner in number inputs */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

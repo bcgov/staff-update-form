@@ -13,17 +13,6 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
             <div>
                 <input
                 type="radio"
-                id="leave_reason_transfer"
-                name="leave_reason"
-                value="transfer"
-                checked={formData.leave_reason === 'transfer'}
-                onChange={handleInputChange}
-                />
-                <label htmlFor="leave_reason_transfer">Transfer to another Ministry</label>
-            </div>
-            <div>
-                <input
-                type="radio"
                 id="leave_reason_retire"
                 name="leave_reason"
                 value="retire"
@@ -54,83 +43,15 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
                 />
                 <label htmlFor="leave_reason_other">Other</label>
             </div>
-            </div>
-            {formData.leave_reason === 'transfer' && (
-            <>
-                <div>
-                <label htmlFor="transfer_ministry">
-                    Ministry the employee is transferring to:
-                </label><br></br>
-                <input
-                    id="transfer_ministry"
-                    type="text"
-                    name="transfer_ministry"
-                    value={formData.transfer_ministry}
-                    onChange={handleInputChange}
-                />
-                </div>
-                <div>
-                <label htmlFor="transfer_supervisor">
-                    Receiving Supervisor at new ministry/division:
-                </label><br></br>
-                <input
-                    id="transfer_supervisor"
-                    type="text"
-                    name="transfer_supervisor"
-                    value={formData.transfer_supervisor}
-                    onChange={handleInputChange}
-                />
-                </div>
-                <div className="radio-group">
-                <label>Is this a Temporary Appointment to another Division or Ministry?</label>
-                <div>
-                    <input
-                    type="radio"
-                    id="ta_transfer_yes"
-                    name="ta_transfer"
-                    value="yes"
-                    checked={formData.ta_transfer === 'yes'}
-                    onChange={handleInputChange}
-                    />
-                    <label htmlFor="ta_transfer_yes">Yes</label>
-                </div>
-                <div>
-                    <input
-                    type="radio"
-                    id="ta_transfer_no"
-                    name="ta_transfer"
-                    value="no"
-                    checked={formData.ta_transfer === 'no'}
-                    onChange={handleInputChange}
-                    />
-                    <label htmlFor="ta_transfer_no">No</label>
-                </div>
-                </div>                
-                {formData.ta_transfer === 'yes' && (
-                <>
-                    <div className="date-field">
-                    <label htmlFor="return_date">
-                    Employee Return Date: 
-                    </label>
-                    <input
-                    type="date"
-                    id="return_date"
-                    name="return_date"
-                    value={formData.return_date || ''}
-                    onChange={handleInputChange}
-                    />
-                </div>
-                </>
-                )}
-            </>
-            )}
-            <br></br>
-            <p style={{ fontSize: '0.8em' }}>
-            <strong><span style={{ backgroundColor: 'yellow' }}>
-                Please note the last day the employee requires access to government systems. All relevant documentation must be submitted by the supervisor to the PSA through a MyHR request.
-            </span></strong>
-            </p>
         </div>
-        </>
+            
+        <br></br>
+        <p style={{ fontSize: '0.8em' }}>
+        <strong><span style={{ backgroundColor: 'yellow' }}>
+            Please note the last day the employee requires access to government systems. All relevant documentation must be submitted by the supervisor to the PSA through a MyHR request.
+        </span></strong>
+        </p>
+    </div>
+    </>
   );
 }

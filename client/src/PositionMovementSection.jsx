@@ -11,6 +11,9 @@ export default function PositionMovementSection({ formData, onChange }) {
       </div>
       <div className="request-change-content">
         <div>
+          <p className="field-note">
+            For Employee Initiated Transfer Requests a Staff Update form is not required
+          </p>
           <label htmlFor="movement_type">
             <span className="required">*</span> Movement Type:
           </label>
@@ -46,7 +49,7 @@ export default function PositionMovementSection({ formData, onChange }) {
 
         <div>
           <label htmlFor="movement_position_num">
-            <span className="required">*</span> Position Number:
+            <span className="required">*</span> New Position Number:
           </label>
           <br />
           <input
@@ -61,7 +64,7 @@ export default function PositionMovementSection({ formData, onChange }) {
 
         <div>
           <label htmlFor="movement_supervisor">
-            <span className="required">*</span> Employee's Supervisor:
+            <span className="required">*</span> New Supervisor:
           </label>
           <br />
           <input
@@ -82,7 +85,7 @@ export default function PositionMovementSection({ formData, onChange }) {
         />
 
         <div>
-          <label htmlFor="movement_classification">Employee Classification:</label>
+          <label htmlFor="movement_classification">New Classification:</label>
           <br />
           <input
             id="movement_classification"
@@ -108,7 +111,7 @@ export default function PositionMovementSection({ formData, onChange }) {
         />
 
         <div>
-          <label htmlFor="movement_paylist">Employee Paylist:</label>
+          <label htmlFor="movement_paylist">New Paylist:</label>
           <br />
           <input
             id="movement_paylist"

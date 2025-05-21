@@ -13,7 +13,7 @@ const LeaveSection = ({ formData, handleInputChange }) => {
           <p>Request for leave may include:</p>
           <ul>
             <li>STIIP leave greater than 1 month</li>
-            <li>Maternity/paternity/extended child care leave</li>
+            <li>Maternity/Parental leave with pay/Extended parental leave</li>
             <li>Long-term disability</li>
             <li>Leave prior to retirement</li>
             <li>Leave without pay</li>
@@ -95,7 +95,7 @@ const LeaveSection = ({ formData, handleInputChange }) => {
               onChange={handleInputChange}
             />
             <div>
-              <label htmlFor="return_classification">Employee Classification:</label>
+              <label htmlFor="return_classification">New Classification:</label>
               <input
                 id="return_classification"
                 type="text"

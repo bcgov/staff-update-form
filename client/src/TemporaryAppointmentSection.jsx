@@ -76,7 +76,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
               <label>Is this a Temporary Appointment for over seven months?</label>
               {[
                 { id: 'ta_over_7months_no', value: 'no', label: 'TA under 7 Months' },
-                { id: 'ta_over_7months_yes', value: 'yes', label: 'TA over 7 Months (meritorious process required)' },
+                { id: 'ta_over_7months_yes', value: 'yes', label: 'TA 7 Months or over (meritorious process required)' },
                 { id: 'ta_over_7months_ext', value: 'extension', label: 'TA Extensions (if > 7 Months, meritorious process required)' },
               ].map(({ id, value, label }) => (
                 <div key={id}>

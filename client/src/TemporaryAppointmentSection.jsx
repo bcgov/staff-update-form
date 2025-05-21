@@ -71,7 +71,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
                 id="ta_date"
                 name="ta_date"
                 value={formData.ta_date || ''}
-                onChange={handleInputChange}
+                onChange={onChange}
               />
             </div>
           </>

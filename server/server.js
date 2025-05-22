@@ -28,6 +28,7 @@ transporter.on('log', (info) => {
 
 // Configure the JWKS client
 const client = jwksClient({
+  //jwksUri: 'https://dev.loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/certs',
   jwksUri: process.env.JWKS_URL,
 });
 
@@ -124,10 +125,10 @@ Staffing Team`,
       attachments: mailAttachments
     });
 
-    console.log('Queued PDF‑mail as', info.messageId);
+    console.log('mail queued - message ID: ', info.messageId);
     res.json({ ok: true, messageId: info.messageId });
   } catch (err) {
-    console.error('send‑pdf error:', err);
+    console.error('send-pdf error:', err);
     res.status(500).json({ error: err.message });
   }
 });

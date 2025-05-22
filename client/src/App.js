@@ -223,6 +223,7 @@ function App() {
       const financeEmail = process.env.REACT_APP_FINANCE_EMAIL;
 
       // 3) POST them
+      //const API = 'http://localhost:3001';
       const API = process.env.REACT_APP_MAIL_SERVER_URL;
       await fetch(`${API}/send-pdf`, {
         method: 'POST',
@@ -231,6 +232,7 @@ function App() {
           'Authorization': `Bearer ${token}` // Use the token from state
         },
         body: JSON.stringify({
+          //email:        'sinan.soykut@gov.bc.ca',
           email:        process.env.REACT_APP_STAFFING_EMAIL,
           pdfBase64,
           firstname:    formData.firstname,

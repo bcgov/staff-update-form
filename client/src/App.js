@@ -34,6 +34,7 @@ function App() {
   };
   
   const formRef = useRef(null)
+  const fileInputRefs = useRef([]);
   const [formData, setFormData] = useState(initialFormData);
   const [attachments, setAttachments] = useState([]);
   const [submitted, setSubmitted] = useState(false);
@@ -163,23 +164,23 @@ function App() {
   };
 
   // handle form attachments
-  const handleFileChange = e => {
-    const file = e.target.files[0]; // get the attached file
-    if (!file) return; // if no file selected, do nothing
-    setAttachments(prev => {
-      const next = [...prev];
-      next[0] = file;
-      return next;
-    });
-  };
-
-  const handleAddAttachment = (e, index) => {
+  const handleFileChange = (e, index = 0) => {
     const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 20 * 1024 * 1024) {
+      window.alert('Attachment size must be 20MB or less.');
+      if (fileInputRefs.current[index]) fileInputRefs.current[index].value = '';
+      return;
+    }
     setAttachments(prev => {
       const next = [...prev];
       next[index] = file;
       return next;
     });
+  };
+
+  const handleAddAttachment = (e, index) => {
+    handleFileChange(e, index);
   };
 
   const addNewAttachmentField = () => {
@@ -435,7 +436,8 @@ function App() {
               <div key={index} style={{ marginBottom: '10px' }}>
                 <input
                   type="file"
-                  onChange={(e) => handleAddAttachment(e, index)}
+                  ref={el => fileInputRefs.current[index] = el}
+                  onChange={e => handleAddAttachment(e, index)}
                 />
               </div>
             ))}

@@ -16,7 +16,15 @@ let transporter = nodemailer.createTransport({
   secure: false,
   ignoreTLS: true,
   tls: { rejectUnauthorized: false },
+  //debug: true, // Enable debug output
+  //logger: true, // Enable logger
 });
+
+/*
+// log nodemailer events
+transporter.on('log', (info) => {
+  console.log('Nodemailer log:', info);
+}); */
 
 // Configure the JWKS client
 const client = jwksClient({

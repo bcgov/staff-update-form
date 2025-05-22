@@ -12,9 +12,8 @@ app.use(bodyParser.json({ limit: '20mb' }));
 
 let transporter = nodemailer.createTransport({
   host: 'apps.smtp.gov.bc.ca',
-  port: 25,
-  secure: false,
-  ignoreTLS: true,
+  port: 465,
+  secure: true,
   tls: { rejectUnauthorized: false },
   //debug: true, // Enable debug output
   //logger: true, // Enable logger

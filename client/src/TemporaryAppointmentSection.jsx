@@ -88,8 +88,8 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
               <label>Is this a Temporary Appointment for over seven months?</label>
               {[
                 { id: 'ta_over_7months_no', value: 'no', label: 'TA under 7 Months' },
-                { id: 'ta_over_7months_yes', value: 'yes', label: 'TA 7 Months or over (meritorious process required)' },
-                { id: 'ta_over_7months_ext', value: 'extension', label: 'TA Extensions (if > 7 Months, meritorious process required)' },
+                { id: 'ta_over_7months_yes', value: 'yes', label: 'TA 7 Months or over' },
+                { id: 'ta_over_7months_ext', value: 'extension', label: 'TA Extensions' },
               ].map(({ id, value, label }) => (
                 <div key={id}>
                   <input
@@ -105,7 +105,7 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
               ))}
             </div>
 
-            {(formData.ta_over_7months === 'yes' || formData.ta_over_7months === 'extension') && (
+            {(formData.ta_over_7months === 'yes' ) && (
               <div className="radio-group">
                 <label>Has the employees gone through a meritorious process?</label>
                 {[

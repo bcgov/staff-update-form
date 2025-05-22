@@ -13,7 +13,7 @@ const LeaveSection = ({ formData, handleInputChange }) => {
           <p>Request for leave may include:</p>
           <ul>
             <li>STIIP leave greater than 1 month</li>
-            <li>Maternity/Parental leave with pay/Extended parental leave</li>
+            <li>Maternity/Parental/Extended Parental leave</li>
             <li>Long-term disability</li>
             <li>Leave prior to retirement</li>
             <li>Leave without pay</li>
@@ -46,6 +46,7 @@ const LeaveSection = ({ formData, handleInputChange }) => {
           </div>
         </div>
 
+        <br></br>
         {formData.leave === 'yes' && (
           <>
             <div className="textarea-field">
@@ -88,6 +89,10 @@ const LeaveSection = ({ formData, handleInputChange }) => {
 
         {formData.leave === 'no' && (
           <div className="form-grid">
+            <p className="field-note">
+              The following information is only required if it has changed since the employee left.
+            </p>
+            <p></p>
             <JobTitleDropdown
               id="return_job_title"
               name="return_job_title"

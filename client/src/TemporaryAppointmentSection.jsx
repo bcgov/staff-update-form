@@ -62,18 +62,6 @@ export default function TemporaryAppointmentSection({ formData, onChange }) {
                 onChange={onChange}
               />
             </div>
-            <div className="date-field">
-              <label htmlFor="ta_date">
-                Employee Return Date: 
-              </label>
-              <input
-                type="date"
-                id="ta_date"
-                name="ta_date"
-                value={formData.ta_date || ''}
-                onChange={onChange}
-              />
-            </div>
           </>
         )}
 

@@ -26,7 +26,7 @@ function App() {
     firstname: '',
     lastname: '',
     employee_id: '',
-    start_date: today,
+    effective_date: today,
     todays_date: today,
     requestor_email: '',
     leave_comment: 'Please do not include any confidential and/or medical information',
@@ -376,14 +376,14 @@ function App() {
             </div> 
             <div className="date-container">
               <div className="date-field">
-                <label htmlFor="start_date">
-                  <span className="required">*</span> Start Date: 
+                <label htmlFor="effective_date">
+                  <span className="required">*</span> Effective Date: 
                 </label>
                 <input
                   type="date"
-                  id="start_date"
-                  name="start_date"
-                  value={formData.start_date || ''}
+                  id="effective_date"
+                  name="effective_date"
+                  value={formData.effective_date || ''}
                   onChange={handleInputChange}
                   required
                 />

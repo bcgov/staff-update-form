@@ -7,7 +7,7 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
             <h4 style={{ color: '#555555' }}>Exits</h4>
         </div>
         <div className="request-change-content">
-            <p style={{ fontSize: '0.8em' }}><strong>The employee will not retain their email account or their H drive. All relevant documentation must be submitted by the supervisor to the PSA through a MyHR request.</strong></p>                 
+            <p style={{ fontSize: '0.8em' }}><strong>The employee will not retain their email account or their H drive.</strong></p>                 
             <div className="radio-group">
             <label>Reason for leaving the division:</label>
             <div>
@@ -59,7 +59,7 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
         <br></br>
         <p style={{ fontSize: '0.8em' }}>
         <strong><span style={{ backgroundColor: 'yellow' }}>
-            Please note the last day the employee requires access to government systems. All relevant documentation must be submitted by the supervisor to the PSA through a MyHR request.
+            Please note the last day the employee requires access to government systems. Resignation/Offer letters from another position must be submitted by the supervisor to the PSA through a MyHR request.
         </span></strong>
         </p>
     </div>

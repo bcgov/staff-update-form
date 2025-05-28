@@ -103,7 +103,6 @@ const CurrentInformationSection = ({ formData, onChange }) => {
             name="position_num"
             value={formData.position_num || ''}
             onChange={onChange}
-            required
           />
         </div>
 

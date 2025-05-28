@@ -88,6 +88,24 @@ const CurrentInformationSection = ({ formData, onChange }) => {
             required
           />
         </div>
+        <OfficeDropdown
+          id="office"
+          name="office"
+          value={formData.office}
+          onChange={handleChange}
+        />
+        
+        <div>
+          <label htmlFor="position_num">Position Number:</label>
+          <input
+            id="position_num"
+            type="number"
+            name="position_num"
+            value={formData.position_num || ''}
+            onChange={onChange}
+            required
+          />
+        </div>
 
         <JobTitleDropdown
           id="job_title"
@@ -122,13 +140,6 @@ const CurrentInformationSection = ({ formData, onChange }) => {
             onChange={handleChange}
           />
         </div>
-
-        <OfficeDropdown
-          id="office"
-          name="office"
-          value={formData.office}
-          onChange={handleChange}
-        />
         <div>
           <label htmlFor="employee_email">Employee Email:</label>
           <input

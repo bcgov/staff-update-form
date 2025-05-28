@@ -26,9 +26,7 @@ export default function PositionMovementSection({ formData, onChange }) {
             required
           >
             <option value="">Please Select:</option>
-            <option value="AUX (TERM)">AUX (TERM)</option>
             <option value="OFR">OFR</option>
-            <option value="Placement">Placement</option>
             <option value="Internal Reassignment">Internal Reassignment</option>
             <option value="Lateral Transfer">Lateral Transfer</option>
             <option value="Demotion">Demotion</option>

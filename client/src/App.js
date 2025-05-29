@@ -4,7 +4,7 @@ import logo from './logo.png';
 import banner from './banner.png';
 import React, { useState, useRef, useEffect } from 'react';
 import { generatePDF } from './pdfGenerator';
-import { getKeycloak, getUserEmail } from './keycloak'; // Import the simplified getKeycloak function
+import { getKeycloak, getUserEmail, getUserIDIR } from './keycloak'; // Import the simplified getKeycloak function
 // import mappings
 import paylistMapping from './programAreaPaylistMapping';
 import classificationMapping from './jobTitleClassificationMapping';
@@ -191,7 +191,13 @@ function App() {
   const handleSubmit = async e => {
     e.preventDefault()
 
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      
     try {
+      // log submit attempt
+      console.log(`submission attempt [${formattedDate}]: `, getUserIDIR());
+
       // 0) collect the user‐picked File[] attachments
       const files = attachments.filter(Boolean); // drop any null placeholders
 
@@ -224,8 +230,7 @@ function App() {
       const financeEmail = process.env.REACT_APP_FINANCE_EMAIL;
 
       // 3) POST them
-      //const API = 'http://localhost:3001';
-      const API = process.env.REACT_APP_MAIL_SERVER_URL;
+      const API = process.env.REACT_APP_MAIL_SERVER_URL || 'http://localhost:3001';
       await fetch(`${API}/send-pdf`, {
         method: 'POST',
         headers: {
@@ -233,8 +238,7 @@ function App() {
           'Authorization': `Bearer ${token}` // Use the token from state
         },
         body: JSON.stringify({
-          //email:        'sinan.soykut@gov.bc.ca',
-          email:        process.env.REACT_APP_STAFFING_EMAIL,
+          email:        process.env.REACT_APP_STAFFING_EMAIL || 'sinan.soykut@gov.bc.ca',
           pdfBase64,
           firstname:    formData.firstname,
           lastname:     formData.lastname,
@@ -248,6 +252,7 @@ function App() {
 
       // 3) show success and reset
       window.alert('Message sent!');
+      console.log(`submission success [${formattedDate}]: `, getUserIDIR());
 
       // reset all form fields, clear out your attachments array
       setFormData(initialFormData);
@@ -256,6 +261,7 @@ function App() {
     } catch (err) {
       console.error(err);
       window.alert(`Error: ${err.message}`);
+      console.log(`submission failure [${formattedDate}] [${err.message}]: `, getUserIDIR());
     }
   }
 

@@ -28,8 +28,7 @@ transporter.on('log', (info) => {
 
 // Configure the JWKS client
 const client = jwksClient({
-  //jwksUri: 'https://dev.loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/certs',
-  jwksUri: process.env.JWKS_URL,
+  jwksUri: process.env.JWKS_URL || 'https://dev.loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/certs',
 });
 
 // Function to get the signing key

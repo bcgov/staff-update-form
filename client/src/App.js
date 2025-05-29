@@ -195,9 +195,6 @@ function App() {
     const formattedDate = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
       
     try {
-      // log submit attempt
-      console.log(`submission attempt [${formattedDate}]: `, getUserIDIR());
-
       // 0) collect the user‐picked File[] attachments
       const files = attachments.filter(Boolean); // drop any null placeholders
 
@@ -252,7 +249,16 @@ function App() {
 
       // 3) show success and reset
       window.alert('Message sent!');
-      console.log(`submission success [${formattedDate}]: `, getUserIDIR());
+
+      // log submission to backend
+      await fetch(process.env.REACT_APP_MAIL_SERVER_URL + '/log-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idir_username: keycloakInstance.tokenParsed.idir_username,
+          datetime: formattedDate
+        })
+      });
 
       // reset all form fields, clear out your attachments array
       setFormData(initialFormData);
@@ -261,7 +267,6 @@ function App() {
     } catch (err) {
       console.error(err);
       window.alert(`Error: ${err.message}`);
-      console.log(`submission failure [${formattedDate}] [${err.message}]: `, getUserIDIR());
     }
   }
 

@@ -132,4 +132,15 @@ Staffing Team`,
   }
 });
 
+// Endpoint to log login events from frontend
+app.post('/log-login', (req, res) => {
+  const { idir_username, datetime } = req.body;
+  if (idir_username && datetime) {
+    console.log(`login [${datetime}]: ${idir_username}`);
+    res.json({ ok: true });
+  } else {
+    res.status(400).json({ error: 'Missing idir_username or datetime' });
+  }
+});
+
 app.listen(3001, () => console.log(`Listening on port 3001`));

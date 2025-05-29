@@ -255,7 +255,7 @@ function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          idir_username: keycloakInstance.tokenParsed.idir_username,
+          idir_username: getUserIDIR(),
           datetime: formattedDate
         })
       });

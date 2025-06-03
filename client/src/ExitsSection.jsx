@@ -59,7 +59,7 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
         <br></br>
         <p style={{ fontSize: '0.8em' }}>
         <strong><span style={{ backgroundColor: 'yellow' }}>
-            Please note the last day the employee requires access to government systems. Resignation/Offer letters from another position must be submitted by the supervisor to the PSA through a MyHR request.
+            Please note the last day the employee requires access to government systems. Supervisors must submit resignation letters and, if applicable, offer letters for new positions to PSA through a MyHR request.
         </span></strong>
         </p>
     </div>

@@ -165,17 +165,15 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
             </section>
             {formData.drive_folders === true && (
             <>
-                <div>
-                <label htmlFor="drives_folders">
-                    What specific drives and folders are required?
-                </label><br></br>
-                <input
-                    id="drives_folders"
-                    type="text"
-                    name="drives_folders"
-                    value={formData.drives_folders}
-                    onChange={handleInputChange}
-                />
+                <div className="textarea-field">
+                    <label htmlFor="drives_folders">What specific drives and folders are required?</label> <br></br>
+                    <textarea
+                        id="drives_folders"
+                        name="drives_folders"
+                        rows="2" 
+                        value={formData.drives_folders || ''}
+                        onChange={handleInputChange}
+                    />
                 </div>
                 <p className="field-note">
                 Please include the S# of the drive that you are requesting and specific folders. Example S\\12345\Folder

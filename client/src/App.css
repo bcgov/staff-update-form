@@ -277,6 +277,7 @@ button {
   padding: 10px;
 }
 
+/* adjust print to pdf display */
 .print-form input,
 .print-form select,
 .print-form textarea {

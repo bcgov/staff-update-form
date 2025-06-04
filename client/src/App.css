@@ -277,7 +277,7 @@ button {
   padding: 10px;
 }
 
-/* adjust print to pdf display */
+/* Hide the default spinner in number inputs */
 .print-form input,
 .print-form select,
 .print-form textarea {
@@ -285,9 +285,17 @@ button {
   line-height: 2rem !important;
   padding: 0 8px !important;
 }
+.print-form .pdf-textarea-replacement {
+  font-family: 'Arial', sans-serif !important;
+  font-size: 12px;
+  padding: 6px !important;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+}
 .print-form .request-type-info {
   display: none !important;
 }
+
 
 /* Hide the default spinner in number inputs */
 input[type="number"]::-webkit-inner-spin-button,

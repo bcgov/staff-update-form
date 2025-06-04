@@ -26,6 +26,7 @@ export async function generatePDF() {
   textareas.forEach(textarea => {
     const replacement = document.createElement('pre');
     replacement.textContent = textarea.value;
+    replacement.classList.add('pdf-textarea-replacement'); // Add a class for custom styling
     replacement.style.cssText = window.getComputedStyle(textarea).cssText;
     replacement.style.whiteSpace = 'pre-wrap';
     replacement.style.wordBreak = 'break-word';
@@ -61,6 +62,6 @@ export async function generatePDF() {
     }
   });
 
-  //pdf.save('form.pdf')
-  return pdf.output('datauristring');
+  pdf.save('form.pdf')
+  //return pdf.output('datauristring');
 }

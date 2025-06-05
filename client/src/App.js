@@ -38,6 +38,7 @@ function App() {
   const [formData, setFormData] = useState(initialFormData);
   const [attachments, setAttachments] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [initialized, setInitialized] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
@@ -190,7 +191,7 @@ function App() {
   // handle form submission
   const handleSubmit = async e => {
     e.preventDefault()
-
+    setIsSubmitting(true);
     const now = new Date();
     const formattedDate = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
       
@@ -228,7 +229,7 @@ function App() {
 
       // 3) POST them
       const API = process.env.REACT_APP_MAIL_SERVER_URL || 'http://localhost:3001';
-      await fetch(`${API}/send-pdf`, {
+      const response = await fetch(`${API}/send-pdf`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -241,32 +242,48 @@ function App() {
           lastname:     formData.lastname,
           employeeID:   formData.employee_id,
           ccMail:       formData.requestor_email, 
-          bccMail:      `${facilitiesEmail}; ${financeEmail}`, // Add facilities and finance emails to BCC
+          bccMail:      `${facilitiesEmail}; ${financeEmail}`,
           date:         formData.todays_date,
           attachments:  attachmentsPayload
         })
       });
 
-      // 3) show success and reset
-      window.alert('Message sent!');
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonErr) {
+        throw new Error('Failed to parse server response.');
+      }
 
-      // log submission to backend
-      await fetch(process.env.REACT_APP_MAIL_SERVER_URL + '/log-submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          idir_username: getUserIDIR(),
-          datetime: formattedDate
-        })
-      });
+      // Show error from server if available
+      if (!response.ok || !result.ok) {
+        const errorMsg = result && result.error ? result.error : response.statusText;
+        throw new Error(`Mail send failed: ${errorMsg}`);
+      }
+      else {
+        // 3) show success and reset
+        window.alert('Message sent!');
 
-      // reset all form fields, clear out your attachments array
-      setFormData(initialFormData);
-      setAttachments([]);
-      formRef.current?.reset() // reset the form element
+        // log submission to backend
+        await fetch(process.env.REACT_APP_MAIL_SERVER_URL + '/log-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            idir_username: getUserIDIR(),
+            datetime: formattedDate
+          })
+        });
+
+        // reset all form fields, clear out your attachments array
+        setFormData(initialFormData);
+        setAttachments([]);
+        formRef.current?.reset(); // reset the form element
+        setIsSubmitting(false);
+      }
     } catch (err) {
-      console.error(err);
-      window.alert(`Error: ${err.message}`);
+      console.error('Mail submission error:', err);
+      window.alert(`Mail submission error: ${err.message || err}`);
+      setIsSubmitting(false);
     }
   }
 
@@ -454,7 +471,7 @@ function App() {
             ))}
 
             <br></br>
-            <button type="submit" style={{ backgroundColor: '#2172ff', color: 'white' }}>Email</button>
+            <button type="submit" style={{ backgroundColor: '#2172ff', color: 'white' }} disabled={isSubmitting}>Email</button>
             
           </div>
         </form>

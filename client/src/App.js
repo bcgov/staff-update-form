@@ -262,7 +262,7 @@ function App() {
       }
       else {
         // 3) show success and reset
-        window.alert('Message sent!');
+        window.alert(`An email has been sent to the Staffing inbox, as well as: ${formData.requestor_email}`);
 
         // log submission to backend
         await fetch(process.env.REACT_APP_MAIL_SERVER_URL + '/log-submit', {
@@ -275,7 +275,11 @@ function App() {
         });
 
         // reset all form fields, clear out your attachments array
-        setFormData(initialFormData);
+        const user_email = getUserEmail();
+        setFormData({
+          ...initialFormData,
+          requestor_email: user_email || ''
+        });
         setAttachments([]);
         formRef.current?.reset(); // reset the form element
         setIsSubmitting(false);

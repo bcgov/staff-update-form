@@ -114,13 +114,13 @@ app.post('/send-pdf', async (req, res) => {
       cc:      ccMail,
       bcc:     bccMail,
       subject: subject,
-      text: `Hello,
-
-Thank you for submitting a Staff Update Form. A staffing team member will process your request as soon as possible.
-
-Kind regards,
-
-Staffing Team`,
+      html:`
+        <p>
+          Hello, <br><br>
+          Thank you for submitting a Staff Update Form. A staffing team member will process your request as soon as possible.<br><br>
+          Kind regards,<br>
+          Staffing Team
+        </p>`,
       attachments: mailAttachments
     });
 

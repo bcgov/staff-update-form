@@ -12,7 +12,14 @@ export default function PositionMovementSection({ formData, onChange }) {
       <div className="request-change-content">
         <div>
           <p className="field-note">
-            For Employee Initiated Transfer Requests a Staff Update form is not required
+            For Employee Initiated Transfer Requests, a Staff Update form is not required. An EITR may be completed{' '}
+            <a
+              href="https://form.icm.gov.bc.ca/or/fr/social/employee-initiated-transfer-request-geographic-form-hr4035/new?form-version=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#2172ff', textDecoration: 'underline' }}
+            > here
+            </a>.
           </p>
           <label htmlFor="movement_type">
             <span className="required">*</span> Movement Type:

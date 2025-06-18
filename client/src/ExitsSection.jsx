@@ -35,6 +35,17 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
             <div>
                 <input
                 type="radio"
+                id="leave_reason_resignation"
+                name="leave_reason"
+                value="resignation"
+                checked={formData.leave_reason === 'resignation'}
+                onChange={handleInputChange}
+                />
+                <label htmlFor="leave_reason_resignation">Resignation</label>
+            </div>
+            <div>
+                <input
+                type="radio"
                 id="leave_reason_terminate"
                 name="leave_reason"
                 value="terminate"

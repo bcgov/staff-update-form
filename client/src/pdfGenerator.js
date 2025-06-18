@@ -78,6 +78,6 @@ export async function generatePDF() {
     }
   });
 
-  pdf.save('form.pdf')
-  //return pdf.output('datauristring');
+  //pdf.save('form.pdf')
+  return pdf.output('datauristring');
 }

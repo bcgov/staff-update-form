@@ -16,8 +16,8 @@ export async function generatePDF() {
   formElement.classList.add('print-form');
 
   const pdf = new jsPDF({
-    unit: 'pt',
-    format: [width, height]
+    unit: 'px',
+    format: [800, height]
   });
 
   // --- Expand all textareas for PDF rendering ---
@@ -78,6 +78,6 @@ export async function generatePDF() {
     }
   });
 
-  //pdf.save('form.pdf')
+  //pdf.save('form.pdf') //print out directly
   return pdf.output('datauristring');
 }

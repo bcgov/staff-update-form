@@ -24,6 +24,20 @@ export async function generatePDF() {
   const textareas = formElement.querySelectorAll('textarea');
   const replacements = [];
   textareas.forEach(textarea => {
+    // Only replace if not the default confidential info message
+    if (
+      (textarea.name === 'comments' &&
+        (textarea.value === 'Please do not include any confidential and/or medical information' ||
+         textarea.value === 'Please do not include unnecessary private information in the comments')) ||
+      (textarea.name === 'leave_comment' &&
+        (textarea.value === 'Please do not include any confidential and/or medical information' ||
+         textarea.value === 'Please do not include unnecessary private information in the comments'))
+    ) {
+      // Hide the textarea for PDF rendering
+      textarea.style.display = 'none';
+      replacements.push({ textarea, replacement: null });
+      return;
+    }
     const replacement = document.createElement('pre');
     replacement.textContent = textarea.value;
     replacement.classList.add('pdf-textarea-replacement'); // Add a class for custom styling
@@ -49,7 +63,9 @@ export async function generatePDF() {
       // Restore all textareas after PDF rendering
       replacements.forEach(({ textarea, replacement }) => {
         textarea.style.display = '';
-        replacement.remove();
+        if (replacement) {
+          replacement.remove();
+        }
       });
     },
     x: 0,
@@ -62,6 +78,6 @@ export async function generatePDF() {
     }
   });
 
-  //pdf.save('form.pdf')
-  return pdf.output('datauristring');
+  pdf.save('form.pdf')
+  //return pdf.output('datauristring');
 }

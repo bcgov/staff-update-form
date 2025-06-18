@@ -454,7 +454,7 @@ function App() {
                 <p className="field-note">Date you are submitting this request</p>
               </div>
             </div>
-            <div className="textarea-field">
+            <div className="textarea-field" style={{ paddingLeft: '30px' }}>
               <label htmlFor="comments">Comments:</label> <br></br>
               <textarea
                 id="comments"
@@ -465,14 +465,14 @@ function App() {
               />
             </div><br></br>
 
-            <div>
+            <div style={{ paddingLeft: '30px' }}>
               <button type="button" onClick={addNewAttachmentField}>
                 Attach a file
               </button>
               <p className="field-note">You can upload pdf's, documents, or other files</p>            
             </div>
             {attachments.map((attachment, index) => (
-              <div key={index} style={{ marginBottom: '10px' }}>
+              <div key={index} style={{ marginBottom: '10px', paddingLeft: '30px' }}>
                 <input
                   type="file"
                   ref={el => fileInputRefs.current[index] = el}
@@ -481,9 +481,9 @@ function App() {
               </div>
             ))}
 
-            <br></br>
-            <button type="submit" style={{ backgroundColor: '#2172ff', color: 'white' }} disabled={isSubmitting}>Email</button>
-            
+            <div style={{ paddingLeft: '30px' }}>
+              <button type="submit" style={{ backgroundColor: '#2172ff', color: 'white' }} disabled={isSubmitting}>Email</button>
+            </div>
           </div>
         </form>
         ) : (

@@ -451,7 +451,7 @@ function App() {
                   onChange={handleInputChange}
                   required
                 />
-                <p className="field-note">Date you are submitting this request</p>
+                <p className="field-note">Date you are submitting this request.</p>
               </div>
             </div>
             <div className="textarea-field" style={{ paddingLeft: '30px' }}>
@@ -469,7 +469,7 @@ function App() {
               <button type="button" onClick={addNewAttachmentField}>
                 Attach a file
               </button>
-              <p className="field-note">You can upload pdf's, documents, or other files</p>            
+              <p className="field-note">You can upload pdf's, documents, or other files.</p>            
             </div>
             {attachments.map((attachment, index) => (
               <div key={index} style={{ marginBottom: '10px', paddingLeft: '30px' }}>

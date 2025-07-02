@@ -149,7 +149,7 @@ const CurrentInformationSection = ({ formData, onChange }) => {
             onChange={handleChange}
           />
           <p className="field-note">
-            This email address <strong>will not</strong> receive a copy of this submission
+            This email address <strong>will not</strong> receive a copy of the submission.
           </p>
         </div>
       </div>

@@ -514,7 +514,7 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
                 </div>
             </>
             )}
-            <p className="field-note">We are unable to mirror the access of an existing employee</p>
+            <p className="field-note">We are unable to mirror the access of an existing employee.</p>
         </div>
     </>
   );

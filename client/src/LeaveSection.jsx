@@ -116,12 +116,12 @@ const LeaveSection = ({ formData, handleInputChange }) => {
               onChange={handleInputChange}
             />
             <div>
-              <label htmlFor="updated_office">ICM service office:</label>
+              <label htmlFor="return_service_office">ICM service office:</label>
               <input
-                id="updated_office"
+                id="return_service_office"
                 type="text"
-                name="updated_office"
-                value={formData.updated_office}
+                name="return_service_office"
+                value={formData.return_service_office}
                 onChange={handleInputChange}
               />
             </div>

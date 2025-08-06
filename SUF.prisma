@@ -1,0 +1,167 @@
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [citext]
+}
+
+model StaffUpdateForm {
+    form_id                     Int     @id @default(autoincrement())
+    requestor_email             String
+    request_type                String
+    submit_timestamp            DateTime   
+    effective_date              DateTime
+    end_date                    DateTime
+    todays_date                 DateTime
+    comments                    String?
+    employee_id                 Int
+    access_request_id           Int?
+    information_change_id       Int?
+    employee_movement_id        Int?
+}
+
+model Employee {
+    employee_id                 Int     @id @default(autoincrement())
+    idir                        String  @unique @db.Citext
+    first_name                  String
+    alternate_name              String?
+    last_name                   String
+    notes                       String? @db.VarChar(2000)
+    supervisor                  String
+    email                       String? @db.VarChar(60)
+    position_num                String?
+    office_number               String
+    assigned_office             Office  @relation(fields: [office_number], references: [office_number])
+    job_title_id                Int?
+    classification_id           Int?
+    program_area_id             Int?
+    paylist_id                  Int?
+}
+
+model AccessRequest {
+    access_request_id           Int     @id @default(autoincrement())
+    drive_folders               Boolean?
+    mailboxes                   Boolean?
+    iexpense                    Boolean?
+    expense_authority           Boolean?
+    software	                Boolean?
+    plms	                    Boolean?
+    third_party_checks	        Boolean?
+    icbc	                    Boolean?
+    vital_stats	                Boolean?
+    new_hires	                Boolean?
+    webaob	                    Boolean?
+    bconline	                Boolean?
+    cdw_obiee	                Boolean?
+    other_access	            Boolean?
+    drives_folders              String?
+    mailbox_radio               String?
+    mailbox_comments            String?
+    software_request	        String?
+    computer_number	            String?
+    software_case	            String?
+    third_party_checks_request  String?
+    icbc_im117	                Boolean?
+    im117_date	                DateTime?
+    vital_name	                String?
+    vital_idir	                String?
+    vital_email	                String?
+    vital_office	            String?
+    new_hire_program_area_id	Int?
+    new_hire_office_id     	    Int?
+    new_hire_position	        String?
+    new_hire_service_office	    String?
+    new_hire_drives	            String?
+    access_comments	            String?
+}
+
+model InformationChange {
+    information_change_id       Int     @id @default(autoincrement())
+    updated_name	            String?
+    updated_supervisor          String?
+    updated_office_id	        Int?
+    updated_program_area_id     Int?
+    updated_paylist_id          Int?
+    updated_service_office	    String?
+    access_request	            Boolean?
+    info_change_eitr_ofr	    String?
+    total_hours	                Int?
+    permanent_hours	            Int?
+    change_hours_start_date	    DateTime?
+    change_hours_end_date	    DateTime?
+}
+  
+model EmployeeMovement {
+    employee_movement_id        Int     @id @default(autoincrement())
+    movement_type               String
+    movement_staffing_req_num   String?
+    movement_position_num       String
+    movement_supervisor         String
+    movement_job_title_id       Int?
+    movement_classification_id  Int?
+    movement_office_id          Int?
+    movement_program_area_id    Int?
+    movement_paylist_id         Int?
+    leave 	                    Boolean?
+    leave_comment	            String?
+    leave_reason	            String?
+    eitr	                    Boolean?
+    return_job_title_id	        Int?
+    return_classification_id	Int?
+    return_office_id	        Int?
+    return_service_office	    String?
+    temp_appt                   String?
+    transfer_ministry           String?
+    transfer_supervisor         String?
+    ta_over_7months             String?
+    meritorious_process         Boolean?
+    acting_title                String?
+    position_incumbent          String?
+    staffing_request_num        String?
+    position_number_TA          String?
+    position_number_SR          String?
+    position_supervisor         String?
+    ta_program_area_id          Int?
+    ta_paylist_id               Int?
+    over_21_days                Boolean?
+    timeleave_access            Boolean?
+    ta_comments                 String?
+}
+
+model JobTitle {
+    title_id                    Int     @id @default(autoincrement())
+    title_name                  String  @unique @db.Citext
+}
+
+model Classification {
+    classification_id           Int     @id @default(autoincrement())
+    classification_name         String  @unique @db.Citext
+}
+
+model ProgramArea {
+    program_area_id             Int     @id @default(autoincrement())
+    program_area_name           String  @unique @db.Citext
+}
+
+model Paylist {
+    paylist_id                  Int     @id @default(autoincrement())
+    paylist_name                String  @unique @db.Citext
+}
+
+model Office {
+    office_number               String     @id
+    office_name                 String     @unique @db.Citext
+    postal_code                 String
+    notes                       String?    @db.VarChar(2000)
+    Employee                    Employee[]
+}
+ 
+model Workstation {
+    asset_tag                   String  @id
+    notes                       String? @db.VarChar(2000)
+}

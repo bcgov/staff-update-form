@@ -249,7 +249,7 @@ function App() {
           lastname:     formData.lastname,
           employeeID:   formData.employee_id,
           ccMail:       formData.requestor_email, 
-          bccMail:      `${facilitiesEmail}; ${financeEmail}`,
+          bccMail:      `${financeEmail}`,
           date:         formData.todays_date,
           attachments:  attachmentsPayload
         })

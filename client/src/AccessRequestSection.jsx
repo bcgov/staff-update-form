@@ -55,16 +55,6 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
                 <div>
                 <input
                     type="checkbox"
-                    id="software"
-                    name="software"
-                    checked={formData.software || false}
-                    onChange={handleInputChange}
-                />
-                <label htmlFor="software">Software</label>
-                </div>
-                <div>
-                <input
-                    type="checkbox"
                     id="plms"
                     name="plms"
                     checked={formData.plms || false}
@@ -263,56 +253,6 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
                 </a>.
                 </p>
                 </label>
-            </>
-            )}
-            {formData.software === true && (
-            <>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                <div style={{ flex: 1 }}>
-                    <label htmlFor="software_request">
-                    Software requested:
-                    </label><br></br>
-                    <select
-                    id="software_request"
-                    name="software_request"
-                    value={formData.software_request}
-                    onChange={handleInputChange}
-                    >
-                    <option value="">Please Select:</option>
-                    <option value="Adobe Acrobat Pro">Adobe Acrobat Pro ($66.60/year)</option>
-                    <option value="Adobe Photoshop">Adobe Photoshop ($294.48/year)</option>
-                    <option value="Adobe Lightroom">Adobe Lightroom ($108.96/year)</option>
-                    <option value="TechSmith Camtasia">TechSmith Camtasia ($278.19/year)</option>
-                    <option value="MS Visio">MS Visio ($174.00/year)</option>
-                    <option value="MS Project">MS Project ($376.44/year)</option>
-                    <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div style={{ flex: 1 }}>
-                    <label htmlFor="computer_number">
-                    Computer number:
-                    </label><br></br>
-                    <input
-                    id="computer_number"
-                    type="text"
-                    name="computer_number"
-                    value={formData.computer_number}
-                    onChange={handleInputChange}
-                    />
-                </div>
-                </div>
-                <div className="textarea-field" style={{ marginTop: '20px' }}>
-                <label htmlFor="software_case">Business case:</label> <br></br>
-                <textarea
-                    id="software_case"
-                    name="software_case"
-                    rows="4" 
-                    value={formData.software_case || ''}
-                    onChange={handleInputChange}
-                />
-                </div>
-                <p className="field-note">Provide a justification for the item requested.</p>
-                <br></br>  
             </>
             )}
             {formData.third_party_checks === true && (

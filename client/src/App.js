@@ -230,8 +230,8 @@ function App() {
       );
       const attachmentsPayload = await Promise.all(filePromises);
 
-      // Separate facilities and finance emails for BCC
-      const facilitiesEmail = process.env.REACT_APP_FACILITIES_EMAIL;
+      // bcc finance only
+      //const facilitiesEmail = process.env.REACT_APP_FACILITIES_EMAIL;
       const financeEmail = process.env.REACT_APP_FINANCE_EMAIL;
 
       // 3) POST them

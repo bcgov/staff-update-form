@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa'; // Add this to fetch the public key dynamically
-const { validateFirstname } = require('./validators');
+import { validateFirstname } from './validators.js';
 
 const app = express();
 app.use(cors());                         // ← allow all origins (or configure as needed)

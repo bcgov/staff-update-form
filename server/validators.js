@@ -1,4 +1,4 @@
-function validateFirstname(value) {
+export function validateFirstname(value) {
   if (typeof value !== 'string' || value.trim() === '') {
     return 'First name must be a non-empty string.';
   } 
@@ -7,5 +7,3 @@ function validateFirstname(value) {
   }
   return null;
 }
-
-module.exports = { validateFirstname };

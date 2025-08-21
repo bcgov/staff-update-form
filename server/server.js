@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa'; // Add this to fetch the public key dynamically
+const { validateFirstname } = require('./validators');
 
 const app = express();
 app.use(cors());                         // ← allow all origins (or configure as needed)
@@ -83,6 +84,12 @@ app.post('/send-pdf', async (req, res) => {
     if (!email)                           return res.status(400).json({ error: 'email is required' });
     if (!pdfBase64)                       return res.status(400).json({ error: 'pdfBase64 is required' });
     if (!firstname || !lastname)          return res.status(400).json({ error: 'firstname & lastname are required' });
+
+    // firstname validation
+    const firstnameError = validateFirstname(firstname);
+    if (firstnameError) {
+      return res.status(400).json({ error: firstnameError });
+    }
 
     // decode the Base64 PDF
     const pdfBuffer = Buffer.from(pdfBase64, 'base64');

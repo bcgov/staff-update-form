@@ -4,7 +4,8 @@ import logo from './logo.png';
 import banner from './banner.png';
 import React, { useState, useRef, useEffect } from 'react';
 import { generatePDF } from './pdfGenerator';
-import { getKeycloak, getUserEmail, getUserIDIR } from './keycloak'; // Import the simplified getKeycloak function
+import { getKeycloak, getUserEmail, getUserIDIR } from './keycloak'; 
+import { validateFirstname } from './validators';
 // import mappings
 import paylistMapping from './programAreaPaylistMapping';
 import classificationMapping from './jobTitleClassificationMapping';
@@ -18,6 +19,7 @@ import PositionMovementSection from './PositionMovementSection';
 import LeaveSection from './LeaveSection';
 import AccessRequestSection from './AccessRequestSection';
 import ExitsSection from './ExitsSection';
+
 
 function App() {
   const today = new Date().toISOString().split('T')[0];
@@ -195,6 +197,13 @@ function App() {
     // Validate request_type is required
     if (!formData.request_type || formData.request_type.length === 0) {
       window.alert('Please select at least one Request Type.');
+      return;
+    }
+
+    // Validate firstname
+    const firstnameError = validateFirstname(formData.firstname);
+    if (firstnameError) {
+      window.alert(firstnameError);
       return;
     }
 

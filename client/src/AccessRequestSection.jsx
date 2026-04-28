@@ -144,12 +144,12 @@ export default function AccessRequestSection({ formData, handleInputChange }) {
                 </div>
             </div>
             <p>
-                For ICE ID requests and Teleopti Access requests, please contact the &nbsp;
+                For ICE ID requests and Teleopti Access requests, please use the &nbsp;
                 <a 
-                href="mailto:SDSI.OPS.SUPPORT.Scheduling.and.Workload.Management@gov.bc.ca" 
+                href="https://forms.office.com/Pages/ResponsePage.aspx?id=AFLbbw09ikqwNtNoXjWa3EkH4PV3OeFKtEXPzzMW5PtUMUVTUDBRT0dQUjM2RkNUTU1FRFQxRlZINi4u" 
                 style={{ color: '#4A90E2', textDecoration: 'underline' }}
                 >
-                Scheduling and Workload Management inbox
+                ABI Request Form
                 </a>.
             </p>                
             </section>

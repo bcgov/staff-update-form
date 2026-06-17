@@ -28,7 +28,7 @@ const officeOptions = [
   { value: '315 New Westminister', label: '315 New Westminister' },
   { value: '322 Surrey North', label: '322 Surrey North' },
   { value: '326 Park Place', label: '326 Park Place' },
-  { value: '327 Fleetwood', label: '327 Fleetwood' },
+  { value: '327 Guildford', label: '327 Guildford' },
   { value: '328 Langley', label: '328 Langley' },
   { value: '330 Abbotsford', label: '330 Abbotsford' },
   { value: '331 Chilliwack', label: '331 Chilliwack' },
